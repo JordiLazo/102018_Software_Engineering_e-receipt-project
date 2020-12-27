@@ -46,8 +46,10 @@ final public class HealthCardID{
     }
 
     public static void main(String[] args) throws NullNotDefinedException {
-        HealthCardID test = new HealthCardID(null);
+        HealthCardID test = new HealthCardID("123");
+        HealthCardID test2 = new HealthCardID("1243");
         System.out.println(test.toString());
+        System.out.println(test.equals(test2));
 
     }
 }
