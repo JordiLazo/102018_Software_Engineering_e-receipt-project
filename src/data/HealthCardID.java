@@ -30,11 +30,12 @@ final public class HealthCardID {
 
     @Override
     public String toString() {
-        return "HealthCardID{" + "personal code='" + personalID + '\'' + '}';
+        return "HealthCardID {" + "personal code='" + personalID + '\'' + '}';
     }
 
     public static void main(String[] args) {
         HealthCardID test = new HealthCardID("acacasc");
         System.out.println(test);
+        System.out.println(test.getPersonalID());
     }
 }
