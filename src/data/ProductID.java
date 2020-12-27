@@ -2,15 +2,14 @@ package data;
 
 public class ProductID {
 
-    private String UPC_code;
+    private String UPCcode;
 
     public ProductID (String UPC){
-
-        this.UPC_code = UPC;
+        this.UPCcode = UPC;
     }
 
-    public String getUPC_code() {
-        return UPC_code;
+    public String getUPCcode() {
+        return UPCcode;
     }
 
     @Override
@@ -22,18 +21,18 @@ public class ProductID {
             return false;
         }
         ProductID productID_1 = (ProductID) o;
-        return UPC_code.equals(productID_1.UPC_code);
+        return UPCcode.equals(productID_1.UPCcode);
     }
 
     @Override
     public int hashCode() {
-        return UPC_code.hashCode();
+        return UPCcode.hashCode();
     }
 
     @Override
     public String toString() {
         return "ProductID{" +
-                "productID='" + UPC_code + '\'' +
+                "productID='" + UPCcode + '\'' +
                 '}';
     }
 }

@@ -1,7 +1,6 @@
 package services;
 
 import data.ProductID;
-
 import java.math.BigDecimal;
 
 public class ProductSpecification {
@@ -18,21 +17,25 @@ public class ProductSpecification {
 
 
     public String getProductID() {
-        return product.getUPC_code();
+        return product.getUPCcode();
     }
     public String getDescription() {
         return description;
     }
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-
-
     public void setDescription(String description) {
         this.description = description;
     }
+    public BigDecimal getPrice() {
+        return price;
+    }
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public static void main(String[] args) {
+        ProductID y = new ProductID("ibuprofeno");
+        BigDecimal z = new BigDecimal("10.29");
+        ProductSpecification x = new ProductSpecification(y,"pastillas",z);
+        System.out.println(x);
     }
 }
