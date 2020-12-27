@@ -4,10 +4,12 @@ import java.util.Arrays;
 
 public class DigitalSignature {
 
-    private byte [] eSignature = "string".getBytes();
+    private byte [] eSignature ;
 
-    public DigitalSignature (byte [] medicalSignature){
-        this.eSignature = medicalSignature;
+    public DigitalSignature (String medicalSignature){
+        // jlazo1223
+        // [\0x23,\0x34,\0xFF,....\0x00]
+        this.eSignature = medicalSignature.getBytes();
     }
 
     public byte[] geteSignature() {
