@@ -1,4 +1,4 @@
-package services;
+package medicalconsultation;
 
 import data.DigitalSignature;
 import data.HealthCardID;
