@@ -1,4 +1,4 @@
-package data;fiy
+package data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
