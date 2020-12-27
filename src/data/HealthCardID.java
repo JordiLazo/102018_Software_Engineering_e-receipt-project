@@ -2,6 +2,12 @@ package data;
 
 import exceptions.NullNotDefinedException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Date;
+
 final public class HealthCardID{
     private final String personalID;
 
@@ -47,9 +53,9 @@ final public class HealthCardID{
 
     }
 
-    public static void main(String[] args) throws NullNotDefinedException {
-        HealthCardID test = new HealthCardID(null);
-        System.out.println(test.toString());
+    public static void main(String[] args) throws NullNotDefinedException, ParseException {
+        Date n= new SimpleDateFormat( "yyyy-MM-dd" ).parse( "2010-05-20" );
+        System.out.println(n);
 
     }
 }
