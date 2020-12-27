@@ -1,5 +1,7 @@
 package data;
 
+import exceptions.NullNotDefinedException;
+
 final public class HealthCardID{
     private final String personalID;
 
