@@ -36,10 +36,6 @@ public class ConsultationTerminal implements HealthNationalService {
     // ????  Other methods, apart from the input events
 
 
-
-
-
-
     @Override
     public MedicalPrescription getePrescription(HealthCardID hcID) throws HealthCardException, NotValidePrescriptionException, ConnectException {
         /*

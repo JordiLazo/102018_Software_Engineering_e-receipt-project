@@ -1,17 +1,16 @@
 package data;
 
-import java.util.Objects;
-
 public class ProductID {
 
-    private String productID;
+    private String UPC_code;
 
     public ProductID (String UPC){
-        this.productID= UPC;
+
+        this.UPC_code = UPC;
     }
 
-    public String getProductID() {
-        return productID;
+    public String getUPC_code() {
+        return UPC_code;
     }
 
     @Override
@@ -23,18 +22,18 @@ public class ProductID {
             return false;
         }
         ProductID productID_1 = (ProductID) o;
-        return productID.equals(productID_1.productID);
+        return UPC_code.equals(productID_1.UPC_code);
     }
 
     @Override
     public int hashCode() {
-        return productID.hashCode();
+        return UPC_code.hashCode();
     }
 
     @Override
     public String toString() {
         return "ProductID{" +
-                "productID='" + productID + '\'' +
+                "productID='" + UPC_code + '\'' +
                 '}';
     }
 }
