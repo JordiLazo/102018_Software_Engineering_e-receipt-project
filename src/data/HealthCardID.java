@@ -3,8 +3,16 @@ package data;
 final public class HealthCardID{
     private final String personalID;
 
-    public HealthCardID(String code)  {
-        this.personalID = code;
+    public HealthCardID(String code) throws NullNotDefinedException {
+        this.personalID = this.checkPersonalID(code);
+    }
+
+    private String checkPersonalID(String code) throws NullNotDefinedException {
+        if (code != null){
+            return code;
+        }
+        throw new NullNotDefinedException("missatge");
+
     }
 
     public String getPersonalID() {
@@ -29,17 +37,17 @@ final public class HealthCardID{
     }
 
     @Override
-    public String toString() throws NullNotDefinedException{
-        if(this.personalID == null){
-            throw new NullNotDefinedException("Error 141231");
+    public String toString() {
+        if(this.personalID != null){
+            return "HealthCardID {" + "personal code='" + personalID + '\'' + '}';
         }
-        return "HealthCardID {" + "personal code='" + personalID + '\'' + '}';
+        return "";
+
     }
 
     public static void main(String[] args) throws NullNotDefinedException {
         HealthCardID test = new HealthCardID(null);
-        System.out.println(test);
-        System.out.println(test.getPersonalID());
-        System.out.println(test.hashCode());
+        System.out.println(test.toString());
+
     }
 }

@@ -1,7 +1,6 @@
 package data;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 class HealthCardIDTest {
 
     @org.junit.jupiter.api.BeforeEach
