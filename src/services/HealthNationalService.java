@@ -11,9 +11,7 @@ import java.util.List;
  * */
 public interface HealthNationalService {
 
-    MedicalPrescription getePrescription(HealthCardID hcID)
-        throws HealthCardException, NotValidePrescriptionException,
-                ConnectException;
+    MedicalPrescription getePrescription(HealthCardID hcID)  throws HealthCardException, NotValidePrescriptionException, ConnectException;
     List<ProductSpecification> getProductsByKW(String keyWord)
         throws AnyKeyWordMedicineException,ConnectException;
 
