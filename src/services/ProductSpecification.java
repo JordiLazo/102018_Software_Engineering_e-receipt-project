@@ -6,19 +6,19 @@ import java.math.BigDecimal;
 
 public class ProductSpecification {
     private String description;
-    private ProductID pd;
+    private ProductID product;
     private BigDecimal price;
 
-    public ProductSpecification(ProductID pd, String description, BigDecimal price) {
+    public ProductSpecification(ProductID product, String description, BigDecimal price) {
         //UPC *description y price
-        this.pd = pd;
+        this.product = product;
         this.description = description;
         this.price = price;
     }
 
 
-    public ProductID getProduct() {
-        return pd;
+    public String getProductID() {
+        return product.getUPC_code();
     }
     public String getDescription() {
         return description;
@@ -29,9 +29,6 @@ public class ProductSpecification {
 
 
 
-    public void setProduct(ProductID pd) {
-        this.pd = pd;
-    }
     public void setDescription(String description) {
         this.description = description;
     }
