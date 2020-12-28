@@ -25,6 +25,7 @@ final public class HealthCardID{
         System.out.println(code);
         System.out.println(newcode1);
         System.out.println(newcode2);
+        //test
         if(code.length() != 28){
             throw new HealthCardException("Invalid HealthCardID. Enter 28 digits.");
         }
