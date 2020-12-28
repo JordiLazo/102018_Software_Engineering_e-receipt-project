@@ -32,10 +32,19 @@ public class ProductSpecification {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "ProductSpecification{" +
+                "description='" + description + '\''+
+                ", product UPC=" + product.getUPCcode() +
+                ", price=" + price +
+                '}';
+    }
+
     public static void main(String[] args) {
         ProductID y = new ProductID("ibuprofeno");
         BigDecimal z = new BigDecimal("10.29");
         ProductSpecification x = new ProductSpecification(y,"pastillas",z);
-        System.out.println(x);
+        System.out.println(x.toString());
     }
 }
