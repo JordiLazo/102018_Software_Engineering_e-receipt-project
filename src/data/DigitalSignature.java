@@ -1,4 +1,6 @@
 package data;
+import exceptions.HealthCardException;
+import exceptions.eSignatureException;
 
 import java.util.Arrays;
 
@@ -7,13 +9,16 @@ public class DigitalSignature {
     private byte [] eSignature ;
 
     public DigitalSignature (String medicalSignature){
-        // jlazo1223
-        // [\0x23,\0x34,\0xFF,....\0x00]
         this.eSignature = medicalSignature.getBytes();
     }
 
     public byte[] geteSignature() {
         return eSignature;
+    }
+    public String checkDigitalSignature(byte [] medicalSignature) throws eSignatureException {
+        if (medicalSignature != null){
+        }
+        throw new eSignatureException("Invalid signature");
     }
 
     @Override
@@ -35,9 +40,14 @@ public class DigitalSignature {
 
     @Override
     public String toString() {
-        return "ProductID{" +
-                "productID='" + Arrays.toString(eSignature) + '\'' +
+        return "DigitalSignature{" +
+                "DigitalSignature='" + Arrays.toString(eSignature) + '\'' +
                 '}';
+    }
+
+    public static void main(String[] args) {
+        DigitalSignature x = new DigitalSignature("iola");
+        System.out.println(x);
     }
 
 

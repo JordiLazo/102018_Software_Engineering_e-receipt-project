@@ -1,11 +1,19 @@
 package data;
 
+import exceptions.ProductNotInPrescription;
+
 public class ProductID {
 
     private String UPCcode;
 
     public ProductID (String UPC){
         this.UPCcode = UPC;
+    }
+
+    public String checkUPCcode(String productcode) throws ProductNotInPrescription {
+        if (productcode != null){
+        }
+        throw new ProductNotInPrescription("Invalid product");
     }
 
     public String getUPCcode() {

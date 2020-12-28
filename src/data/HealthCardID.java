@@ -1,15 +1,10 @@
 package data;
 
 import exceptions.HealthCardException;
-import exceptions.NullNotDefinedException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Locale;
 
 final public class HealthCardID{
     private final String personalID;
@@ -30,8 +25,6 @@ final public class HealthCardID{
             }
         }
         throw new HealthCardException("Error null code");
-
-
     }
 
     public String getPersonalID() {
@@ -63,7 +56,7 @@ final public class HealthCardID{
         return "";
     }
 
-    public static void main(String[] args) throws NullNotDefinedException, ParseException, HealthCardException {
+    public static void main(String[] args) throws ParseException, HealthCardException {
         Date n= new SimpleDateFormat( "yyyy-MM-dd" ).parse( "2010-05-20" );
         System.out.println(n);
         HealthCardID z = new HealthCardID("BBBBBBBBPR148597807024001012");
