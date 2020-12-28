@@ -13,35 +13,25 @@ import java.util.Locale;
 
 final public class HealthCardID{
     private final String personalID;
+    private final int HEALTHCARD_SIZE_ID=28;
+    private final String PREFIX="BBBBBBBB";
 
-    public HealthCardID(String code) throws NullNotDefinedException, HealthCardException {
+    public HealthCardID(String code) throws HealthCardException {
         this.personalID = this.checkPersonalID(code);
     }
 
-    private String checkPersonalID(String code) throws NullNotDefinedException, HealthCardException {
-        code = code.toUpperCase();
-        String newcode1 = code.substring(8,10);
-        String newcode2 = code.substring(10,28);
-        System.out.println(code);
-        System.out.println(newcode1);
-        System.out.println(newcode2);
-        //test
-        if(code.length() != 28){
-            throw new HealthCardException("Invalid HealthCardID. Enter 28 digits.");
-        }
-        if (!code.startsWith("BBBBBBBB")){
-            throw new HealthCardException("Invalid HealthCardID. Wrong 8 digits");
-        }
-        if (!newcode1.matches("[A-Z]*")){
-            throw new HealthCardException("Invalid 2 letters");
-        }
-        if (!newcode2.matches("[0-9]+")){
-            throw new HealthCardException("Invalid 18 digits");
-        }
+    public String checkPersonalID(String code) throws HealthCardException {
         if (code != null){
-            return code;
+            code = code.toUpperCase();
+            if( (code.length() == HEALTHCARD_SIZE_ID && code.startsWith(PREFIX) && code.substring(PREFIX.length()-1,PREFIX.length()+1).matches("[A-Z]*") && code.substring(PREFIX.length()+2,HEALTHCARD_SIZE_ID-1).matches("[0-9]+"))  ){
+               return code;
+            }else {
+                throw new HealthCardException("Invalid HealtCard Id format");
+            }
         }
-        throw new NullNotDefinedException("missatge");
+        throw new HealthCardException("Error null code");
+
+
     }
 
     public String getPersonalID() {
