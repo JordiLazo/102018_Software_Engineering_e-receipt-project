@@ -9,7 +9,6 @@ public class DigitalSignature {
 
     public DigitalSignature (String medicalSignature) throws eSignatureException {
         this.eSignature = this.checkDigitalSignature(medicalSignature).getBytes();
-        System.out.println(eSignature.length);
     }
 
     public byte[] geteSignature() {

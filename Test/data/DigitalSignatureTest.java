@@ -32,11 +32,16 @@ class DigitalSignatureTest {
     }
 
     @Test
-    @DisplayName("Check if ")
+    @DisplayName("Check if 2 arrays are equals")
     void geteSignature(){
         byte[] test= "Dr.Ferran".getBytes();
-        byte[] test2= "Dr.Ferr".getBytes();
-        //assertEquals(Arrays.toString(d1.geteSignature()), Arrays.toString(d2.geteSignature()));
-        //assertFalse(Arrays.equals(d1.geteSignature(), d4.geteSignature()));
+        byte[] test2= "Dr.Ferran".getBytes();
+
+        byte[] s = "1".getBytes();
+        byte[] t = "1".getBytes();
+        byte[] w = "1".getBytes();
+        assertArrayEquals(s,t);
+        assertArrayEquals(test, test2);
+        //assertFalse(Arrays.equals(test, test2));
     }
 }
