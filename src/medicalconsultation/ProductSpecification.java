@@ -1,6 +1,8 @@
 package medicalconsultation;
 
 import data.ProductID;
+import exceptions.ProductNotInPrescription;
+
 import java.math.BigDecimal;
 
 public class ProductSpecification {
@@ -41,7 +43,7 @@ public class ProductSpecification {
                 '}';
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ProductNotInPrescription {
         ProductID y = new ProductID("ibuprofeno");
         BigDecimal z = new BigDecimal("10.29");
         ProductSpecification x = new ProductSpecification(y,"pastillas",z);

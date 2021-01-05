@@ -5,13 +5,13 @@ import java.util.Arrays;
 
 public class DigitalSignature {
 
-    private byte [] eSignature ;
+    private final byte [] eSignature ;
 
     public DigitalSignature (String medicalSignature) throws eSignatureException {
         this.eSignature = this.checkDigitalSignature(medicalSignature); // prevents getting bytes from null
     }
 
-    public byte[] geteSignature() {
+    public byte[] getDigitalSignature() {
         return this.eSignature;
     }
 
@@ -49,8 +49,7 @@ public class DigitalSignature {
 
     public static void main(String[] args) throws eSignatureException {
         DigitalSignature d1 = new DigitalSignature("Dr.Ferran");
-        System.out.println(d1.geteSignature());
+        System.out.println(d1.getDigitalSignature());
     }
-
 
 }

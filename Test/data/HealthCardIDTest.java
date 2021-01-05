@@ -27,6 +27,7 @@ class HealthCardIDTest {
         assertThrows(HealthCardException.class,()->new HealthCardID("BBBBBBBBQR28451896512347895P"));
         assertThrows(HealthCardException.class,()->new HealthCardID("BBBBBBBBQR2845189651234789599"));
         assertThrows(HealthCardException.class,()->new HealthCardID("BBBBBBBBQRZZZZZZ9651234789599"));
+        assertThrows(HealthCardException.class,()->new HealthCardID(" "));
     }
 
     @Test

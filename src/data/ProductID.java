@@ -4,14 +4,14 @@ import exceptions.ProductNotInPrescription;
 
 public class ProductID {
 
-    private String UPCcode;
+    private final String UPCcode;
 
-    public ProductID (String UPC){
-        this.UPCcode = UPC;
+    public ProductID (String UPC) throws ProductNotInPrescription {
+        this.UPCcode = this.checkUPCcode(UPC);
     }
 
     public String checkUPCcode(String productcode) throws ProductNotInPrescription {
-        if (productcode != null){
+        if (productcode != null && !productcode.equals("")){
             return productcode;
         }
         throw new ProductNotInPrescription("Invalid product");
