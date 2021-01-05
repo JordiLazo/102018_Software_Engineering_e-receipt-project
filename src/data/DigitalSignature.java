@@ -19,7 +19,6 @@ public class DigitalSignature {
         if (medicalSignature == null){
             throw new eSignatureException("Invalid signature");
         }
-        return medicalSignature;
     }
 
     @Override
