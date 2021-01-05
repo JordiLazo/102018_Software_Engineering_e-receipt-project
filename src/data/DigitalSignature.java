@@ -8,17 +8,19 @@ public class DigitalSignature {
     private byte [] eSignature ;
 
     public DigitalSignature (String medicalSignature) throws eSignatureException {
-        this.eSignature = this.checkDigitalSignature(medicalSignature).getBytes();
+        this.eSignature = this.checkDigitalSignature(medicalSignature); // prevents getting bytes from null
     }
 
     public byte[] geteSignature() {
         return this.eSignature;
     }
 
-    public String checkDigitalSignature(String medicalSignature) throws eSignatureException {
+    public byte[] checkDigitalSignature(String medicalSignature) throws eSignatureException {
         if (medicalSignature == null){
             throw new eSignatureException("Invalid signature");
         }
+        //we sure medicalSignature not null
+        return medicalSignature.getBytes();
     }
 
     @Override

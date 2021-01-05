@@ -14,7 +14,7 @@ class DigitalSignatureTest {
     void setup() throws eSignatureException {
         d1 = new DigitalSignature("Dr.Ferran");
         d2 = new DigitalSignature("Dr.Ferran");
-        d3 = new DigitalSignature(null);
+        //d3 = new DigitalSignature(null); fails and raise exception, then it doesn't creates a digital signature just it stops execution
         d4 = new DigitalSignature("HOLA");
     }
 
@@ -28,20 +28,25 @@ class DigitalSignatureTest {
     @DisplayName("Check if Digital Signature is null")
     void checkDigitalSignature() {
         assertThrows(eSignatureException.class,()-> new DigitalSignature(null));
-        assertNull(d3);
+        //assertNull(d3); due to D3 has stopped execution, this assertion is never performed
     }
 
     @Test
     @DisplayName("Check if 2 arrays are equals")
     void geteSignature(){
-        byte[] test= "Dr.Ferran".getBytes();
-        byte[] test2= "Dr.Ferran".getBytes();
+        byte[] expected1= "Dr.Ferran".getBytes();
+        byte[] expected2= "Dr.Ferran".getBytes();
+        byte[] expected4= "HOLA".getBytes();
 
-        byte[] s = "1".getBytes();
-        byte[] t = "1".getBytes();
-        byte[] w = "1".getBytes();
-        assertArrayEquals(s,t);
-        assertArrayEquals(test, test2);
+        assertArrayEquals(expected1,d1.geteSignature());
+        assertArrayEquals(expected2,d2.geteSignature());
+        assertArrayEquals(expected4,d4.geteSignature());
+
+        //byte[] s = "1".getBytes();
+        //byte[] t = "1".getBytes();
+        //byte[] w = "1".getBytes();
+        //assertArrayEquals(s,t);
+        //assertArrayEquals(test, test2);
         //assertFalse(Arrays.equals(test, test2));
     }
 }
