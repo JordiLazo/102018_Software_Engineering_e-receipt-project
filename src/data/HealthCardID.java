@@ -18,7 +18,7 @@ final public class HealthCardID{
     public String checkPersonalID(String code) throws HealthCardException {
         if (code != null){
             code = code.toUpperCase();
-            if( (code.length() == HEALTHCARD_SIZE_ID && code.startsWith(PREFIX) && code.substring(PREFIX.length()-1,PREFIX.length()+1).matches("[A-Z]*") && code.substring(PREFIX.length()+2,HEALTHCARD_SIZE_ID-1).matches("[0-9]+"))  ){
+            if( (code.length() == HEALTHCARD_SIZE_ID && code.startsWith(PREFIX) && code.substring(PREFIX.length()+1,PREFIX.length()+2).matches("[A-Z]*") && code.substring(PREFIX.length()+2,HEALTHCARD_SIZE_ID).matches("[0-9]+"))  ){
                return code;
             }else {
                 throw new HealthCardException("Invalid HealtCard Id format");
@@ -54,12 +54,5 @@ final public class HealthCardID{
             return "HealthCardID {" + "personal code='" + personalID + '\'' + '}';
         }
         return "";
-    }
-
-    public static void main(String[] args) throws ParseException, HealthCardException {
-        Date n= new SimpleDateFormat( "yyyy-MM-dd" ).parse( "2010-05-20" );
-        System.out.println(n);
-        HealthCardID z = new HealthCardID("BBBBBBBBPR148597807024001012");
-        System.out.println(z);
     }
 }

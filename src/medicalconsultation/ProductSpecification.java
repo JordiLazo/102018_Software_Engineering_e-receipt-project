@@ -1,4 +1,4 @@
-package services;
+package medicalconsultation;
 
 import data.ProductID;
 import java.math.BigDecimal;

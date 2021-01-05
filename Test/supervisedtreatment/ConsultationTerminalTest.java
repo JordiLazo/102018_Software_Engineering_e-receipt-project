@@ -1,0 +1,5 @@
+package supervisedtreatment;
+
+class ConsultationTerminalTest {
+
+}

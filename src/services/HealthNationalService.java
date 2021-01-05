@@ -3,6 +3,7 @@ package services;
 import data.HealthCardID;
 import exceptions.*;
 import medicalconsultation.MedicalPrescription;
+import medicalconsultation.ProductSpecification;
 
 import java.util.List;
 

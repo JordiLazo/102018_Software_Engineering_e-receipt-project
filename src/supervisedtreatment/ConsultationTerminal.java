@@ -3,14 +3,13 @@ package supervisedtreatment;
 import data.HealthCardID;
 import exceptions.*;
 import medicalconsultation.MedicalPrescription;
-import services.HealthNationalService;
-import services.ProductSpecification;
+import medicalconsultation.ProductSpecification;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ConsultationTerminal implements HealthNationalService {
+public class ConsultationTerminal {
     MedicalPrescription medicalPrescription = null;
 
     public ConsultationTerminal() {
@@ -56,7 +55,7 @@ public class ConsultationTerminal implements HealthNationalService {
 
     // ????  Other methods, apart from the input events
 
-
+/*
     @Override
     public MedicalPrescription getePrescription(HealthCardID hcID) throws HealthCardException, NotValidePrescriptionException, ConnectException {
 
@@ -67,7 +66,7 @@ public class ConsultationTerminal implements HealthNationalService {
          *moguda per conectarse al SNS
          */
         //Descarregar
-        return new MedicalPrescription();
+/*        return new MedicalPrescription();
     }
 
     @Override
@@ -84,7 +83,7 @@ public class ConsultationTerminal implements HealthNationalService {
          */
 
 
-
+/*
         return new ArrayList<ProductSpecification>();
     }
 
@@ -96,11 +95,12 @@ public class ConsultationTerminal implements HealthNationalService {
          *  Trobat ------> return List<ProductSpecification> [opt][especificacions]
          *
          * */
-        return null;
+/*        return null;
     }
 
     @Override
     public MedicalPrescription sendePrescription(MedicalPrescription ePresc) throws ConnectException, NotValidePrescription, eSignatureException, NotCompletedMedicalPrescription {
         return null;
     }
+*/
 }
