@@ -7,17 +7,18 @@ public class DigitalSignature {
 
     private byte [] eSignature ;
 
-    public DigitalSignature (String medicalSignature){
-        this.eSignature = medicalSignature.getBytes();
+    public DigitalSignature (String medicalSignature) throws eSignatureException {
+        this.eSignature = this.checkDigitalSignature(medicalSignature).getBytes();
     }
 
     public byte[] geteSignature() {
         return eSignature;
     }
-    public String checkDigitalSignature(byte [] medicalSignature) throws eSignatureException {
-        if (medicalSignature != null){
+    public String checkDigitalSignature(String medicalSignature) throws eSignatureException {
+        if (medicalSignature == null){
+            throw new eSignatureException("Invalid signature");
         }
-        throw new eSignatureException("Invalid signature");
+        return medicalSignature;
     }
 
     @Override
@@ -45,8 +46,7 @@ public class DigitalSignature {
     }
 
     public static void main(String[] args) {
-        DigitalSignature x = new DigitalSignature("iola");
-        System.out.println(x.toString());
+
     }
 
 

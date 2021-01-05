@@ -11,7 +11,7 @@ class HealthCardIDTest {
     void setup() throws HealthCardException{
         hc1 = new HealthCardID("BBBBBBBBQR784518965123478958");
     }
-    @DisplayName("Creating card with correct format")
+    @DisplayName("Creating a card with the correct format")
     @Test
     void getPersonalIDTest(){
         assertEquals("BBBBBBBBQR784518965123478958",hc1.getPersonalID());
@@ -19,7 +19,7 @@ class HealthCardIDTest {
 
 
 
-    @DisplayName("Creating card with wrong format")
+    @DisplayName("Creating a card with the wrong format")
     @Test
     void creating_hc_error_format(){
         assertThrows(HealthCardException.class,()->new HealthCardID("ABBBBBBBQR784518965123478958"));
