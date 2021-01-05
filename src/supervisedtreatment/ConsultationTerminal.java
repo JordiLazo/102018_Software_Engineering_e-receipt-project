@@ -11,11 +11,32 @@ import java.util.Date;
 import java.util.List;
 
 public class ConsultationTerminal implements HealthNationalService {
+    MedicalPrescription medicalPrescription = null;
 
     public ConsultationTerminal() {
     }
 
     public void initRevision()throws HealthCardException,  NotValidePrescriptionException, ConnectException{
+        /*
+         * try{
+         *   this.conectarse_agenda_visites_concertades()
+         *   String hcId = socketAgendaVisites.recvfrom()
+         *
+         *   HealthCard hc = new hcID(hcId)
+         *
+         *   this.medicalPrescription = this.getePrescription(hc)
+         *
+         *
+         *
+         * }catch(ConnectException ce){
+         *   ce.printStackTrace();
+         * }catch (HealthCardException hcEx) {
+         *   hcEx.printStackTrace();
+         * }catch (NotValidePrescriptionException nvpe) {
+         *   nvpe.printStackTrace();
+         * }
+         *
+         * */
 
     }
     public void initPrescriptionEdition()throws AnyCurrentPrescriptionException, NotFinishedTreatmentException{}
@@ -38,12 +59,13 @@ public class ConsultationTerminal implements HealthNationalService {
 
     @Override
     public MedicalPrescription getePrescription(HealthCardID hcID) throws HealthCardException, NotValidePrescriptionException, ConnectException {
-        /*
-        *
-        * */
+
         if (hcID ==  null) {
             throw new HealthCardException("Not a HealtCard");
         }
+        /*
+         *moguda per conectarse al SNS
+         */
         //Descarregar
         return new MedicalPrescription();
     }
@@ -69,11 +91,11 @@ public class ConsultationTerminal implements HealthNationalService {
     @Override
     public ProductSpecification getProcuductSpecific(int opt) throws AnyMedicineSearchException, ConnectException {
         /*
-        *  buscar medicina
-        *  No trobar ---> AnyMedicineSearchException
-        *  Trobat ------> return List<ProductSpecification> [opt][especificacions]
+         *  buscar medicina
+         *  No trobar ---> AnyMedicineSearchException
+         *  Trobat ------> return List<ProductSpecification> [opt][especificacions]
          *
-        * */
+         * */
         return null;
     }
 
