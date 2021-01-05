@@ -12,6 +12,7 @@ public class ProductID {
 
     public String checkUPCcode(String productcode) throws ProductNotInPrescription {
         if (productcode != null){
+            return productcode;
         }
         throw new ProductNotInPrescription("Invalid product");
     }

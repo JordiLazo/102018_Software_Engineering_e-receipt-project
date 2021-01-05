@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class DigitalSignatureTest implements TestInterface {
-    DigitalSignature d1, d2,d3;
+    DigitalSignature d1, d2;
 
     @BeforeEach
     void setup() throws eSignatureException {
         d1 = new DigitalSignature("iola");
         d2 = new DigitalSignature("iola");
-        d3 = new DigitalSignature(null);
     }
     @Test
     @DisplayName("Check if two Digital Signatures are the same")
