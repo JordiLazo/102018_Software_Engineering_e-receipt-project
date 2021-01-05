@@ -1,5 +1,4 @@
 package data;
-import exceptions.HealthCardException;
 import exceptions.eSignatureException;
 
 import java.util.Arrays;
@@ -47,7 +46,7 @@ public class DigitalSignature {
 
     public static void main(String[] args) {
         DigitalSignature x = new DigitalSignature("iola");
-        System.out.println(x);
+        System.out.println(x.toString());
     }
 
 
