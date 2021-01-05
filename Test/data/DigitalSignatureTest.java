@@ -25,6 +25,7 @@ class DigitalSignatureTest implements TestInterface {
     @Override
     public void checkDiferentDigitalSignature() {
         assertThrows(eSignatureException.class,()-> new DigitalSignature(null));
+
     }
 
     @Override
