@@ -9,10 +9,11 @@ public class DigitalSignature {
 
     public DigitalSignature (String medicalSignature) throws eSignatureException {
         this.eSignature = this.checkDigitalSignature(medicalSignature).getBytes();
+        System.out.println(eSignature.length);
     }
 
     public byte[] geteSignature() {
-        return eSignature;
+        return this.eSignature;
     }
 
     public String checkDigitalSignature(String medicalSignature) throws eSignatureException {
@@ -48,7 +49,7 @@ public class DigitalSignature {
 
     public static void main(String[] args) throws eSignatureException {
         DigitalSignature d1 = new DigitalSignature("Dr.Ferran");
-        System.out.println(d1.toString());
+        System.out.println(d1.geteSignature());
     }
 
 

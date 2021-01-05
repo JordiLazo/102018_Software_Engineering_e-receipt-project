@@ -3,18 +3,19 @@ package data;
 import exceptions.eSignatureException;
 import org.junit.jupiter.api.*;
 
-import static com.sun.tools.doclint.Entity.not;
+import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class DigitalSignatureTest {
-    DigitalSignature d1, d2, d3;
+    DigitalSignature d1, d2, d3, d4;
 
     @BeforeEach
     void setup() throws eSignatureException {
         d1 = new DigitalSignature("Dr.Ferran");
         d2 = new DigitalSignature("Dr.Ferran");
         d3 = new DigitalSignature(null);
+        d4 = new DigitalSignature("HOLA");
     }
 
     @Test
@@ -35,6 +36,7 @@ class DigitalSignatureTest {
     void geteSignature(){
         byte[] test= "Dr.Ferran".getBytes();
         byte[] test2= "Dr.Ferr".getBytes();
-        assertArrayEquals(d1.geteSignature(),test);
+        //assertEquals(Arrays.toString(d1.geteSignature()), Arrays.toString(d2.geteSignature()));
+        //assertFalse(Arrays.equals(d1.geteSignature(), d4.geteSignature()));
     }
 }
