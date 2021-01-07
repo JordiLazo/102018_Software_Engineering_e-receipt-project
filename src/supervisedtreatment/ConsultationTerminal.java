@@ -4,41 +4,42 @@ import data.HealthCardID;
 import exceptions.*;
 import medicalconsultation.MedicalPrescription;
 import medicalconsultation.ProductSpecification;
+import services.HealthNationalService;
+import services.ScheduledVisitAgenda;
 
+import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class ConsultationTerminal {
     MedicalPrescription medicalPrescription = null;
+    HealthCardID hc;
+    ScheduledVisitAgenda sva;
+    HealthNationalService hns;
+    boolean isFinishedPrescription = false;//not initiated
+
+
 
     public ConsultationTerminal() {
-    }
-
-    public void initRevision()throws HealthCardException,  NotValidePrescriptionException, ConnectException{
-        /*
-         * try{
-         *   this.conectarse_agenda_visites_concertades()
-         *   String hcId = socketAgendaVisites.recvfrom()
-         *
-         *   HealthCard hc = new hcID(hcId)
-         *
-         *   this.medicalPrescription = this.getePrescription(hc)
-         *
-         *
-         *
-         * }catch(ConnectException ce){
-         *   ce.printStackTrace();
-         * }catch (HealthCardException hcEx) {
-         *   hcEx.printStackTrace();
-         * }catch (NotValidePrescriptionException nvpe) {
-         *   nvpe.printStackTrace();
-         * }
-         *
-         * */
 
     }
-    public void initPrescriptionEdition()throws AnyCurrentPrescriptionException, NotFinishedTreatmentException{}
+
+    public void initRevision()throws HealthCardException,  NotValidePrescriptionException, ConnectException {
+        hc = sva.getHealthCardID();
+        if (hc == null) {
+            throw new HealthCardException("Invalid card");
+        }
+        medicalPrescription = hns.getePrescription(hc);
+    }
+
+    public void initPrescriptionEdition()throws AnyCurrentPrescriptionException, NotFinishedTreatmentException{
+
+        if (isFinishedPrescription){
+            throw new AnyCurrentPrescriptionException("Error");
+        }
+        isFinishedPrescription = false;
+    }
 
     public void searchForProducts(String keyWord)throws AnyKeyWordMedicineException, ConnectException{}
 
@@ -49,7 +50,9 @@ public class ConsultationTerminal {
 
     public void enterTreatmentEndingDate(Date date)throws IncorrectEndingDateException{}
 
-    public void sendePrescription()throws ConnectException, NotValidePrescription, eSignatureException, NotCompletedMedicalPrescription{}
+    public void sendePrescription()throws ConnectException, NotValidePrescription, eSignatureException, NotCompletedMedicalPrescription{
+        isFinishedPrescription = true;
+    }
 
     public void printePresc()throws printingException{}
 
