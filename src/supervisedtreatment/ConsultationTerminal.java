@@ -17,8 +17,10 @@ public class ConsultationTerminal {
     HealthCardID hc;
     ScheduledVisitAgenda sva;
     HealthNationalService hns;
-    boolean isFinishedPrescription = false;//not initiated
 
+    boolean isFinishedPrescription;//by default it is initiated to false
+    List<ProductSpecification> list_of_products;
+    private ProductSpecification choosenProduct;
 
 
     public ConsultationTerminal() {
@@ -38,13 +40,22 @@ public class ConsultationTerminal {
         if (isFinishedPrescription){
             throw new AnyCurrentPrescriptionException("Error");
         }
-        isFinishedPrescription = false;
+        //this.isFinishedPrescription = false;
 
     }
 
-    public void searchForProducts(String keyWord)throws AnyKeyWordMedicineException, ConnectException{}
+    public void searchForProducts(String keyWord)throws AnyKeyWordMedicineException, ConnectException{
+        if (!keyWord.equals("")) {
+            this.list_of_products = hns.getProductsByKW(keyWord);
+        }
+    }
 
-    public void selectProduct(int option)throws  AnyMedicineSearchException, ConnectException{}
+    public void selectProduct(int option)throws  AnyMedicineSearchException, ConnectException{
+        if (0<=option && option <this.list_of_products.size()){
+            this.choosenProduct= hns.getProcuductSpecific(option);
+        }
+
+    }
 
     public void enterMedicineGuidelines(String[] instruc)throws
             AnySelectedMedicineException, IncorrectTakingGuidelinesException{}
