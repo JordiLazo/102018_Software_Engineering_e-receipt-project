@@ -31,7 +31,7 @@ public class MedicalPrescriptionLine {
         }
         throw new ProductNotInPrescription("Cannot modify: Not found product ");
     }
-    public void removeLine(ProductID prodID,String[] instruc) throws ProductNotInPrescription{
+    public void removeLine(ProductID prodID) throws ProductNotInPrescription{
         if(map.containsKey(prodID)){
             map.remove(prodID);
         }else{
