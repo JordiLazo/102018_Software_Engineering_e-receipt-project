@@ -1,5 +1,4 @@
 package supervisedtreatment;
 
 class ConsultationTerminalTest {
-
 }
