@@ -39,6 +39,7 @@ public class ConsultationTerminal {
             throw new AnyCurrentPrescriptionException("Error");
         }
         isFinishedPrescription = false;
+
     }
 
     public void searchForProducts(String keyWord)throws AnyKeyWordMedicineException, ConnectException{}
