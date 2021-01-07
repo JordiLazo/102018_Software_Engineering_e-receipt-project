@@ -34,6 +34,10 @@ public class ProductSpecification {
         this.price = price;
     }
 
+    public ProductID getProduct() {
+        return product;
+    }
+
     @Override
     public String toString() {
         return "ProductSpecification{" +

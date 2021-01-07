@@ -13,8 +13,8 @@ import java.util.List;
 public interface HealthNationalService {
 
     MedicalPrescription getePrescription(HealthCardID hcID)  throws HealthCardException, NotValidePrescriptionException, ConnectException;
-    List<ProductSpecification> getProductsByKW(String keyWord)
-        throws AnyKeyWordMedicineException,ConnectException;
+
+    List<ProductSpecification> getProductsByKW(String keyWord) throws AnyKeyWordMedicineException,ConnectException;
 
     ProductSpecification getProcuductSpecific(int opt)
         throws AnyMedicineSearchException, ConnectException;

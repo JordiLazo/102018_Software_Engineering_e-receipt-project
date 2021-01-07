@@ -1,16 +1,17 @@
 package supervisedtreatment;
 
+import data.DigitalSignature;
 import data.HealthCardID;
+import data.ProductID;
 import exceptions.*;
 import medicalconsultation.MedicalPrescription;
 import medicalconsultation.ProductSpecification;
 import services.HealthNationalService;
 import services.ScheduledVisitAgenda;
 
-import java.security.cert.TrustAnchor;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class ConsultationTerminal {
     MedicalPrescription medicalPrescription = null;
@@ -21,6 +22,7 @@ public class ConsultationTerminal {
     boolean isFinishedPrescription;//by default it is initiated to false
     List<ProductSpecification> list_of_products;
     private ProductSpecification choosenProduct;
+    private Date treatmentEndingDate =null;
 
 
     public ConsultationTerminal() {
@@ -47,75 +49,55 @@ public class ConsultationTerminal {
     public void searchForProducts(String keyWord)throws AnyKeyWordMedicineException, ConnectException{
         if (!keyWord.equals("")) {
             this.list_of_products = hns.getProductsByKW(keyWord);
-        }
+        }throw new AnyKeyWordMedicineException("No keyword");
     }
 
     public void selectProduct(int option)throws  AnyMedicineSearchException, ConnectException{
-        if (0<=option && option <this.list_of_products.size()){
-            this.choosenProduct= hns.getProcuductSpecific(option);
+        if (list_of_products != null) {
+            if (0<=option && option <this.list_of_products.size()){
+                this.choosenProduct= hns.getProcuductSpecific(option);
+            }
         }
-
     }
 
     public void enterMedicineGuidelines(String[] instruc)throws
-            AnySelectedMedicineException, IncorrectTakingGuidelinesException{}
+            AnySelectedMedicineException, IncorrectTakingGuidelinesException{
+        if (choosenProduct != null) {
+            if (instruc.length !=0) {
+                medicalPrescription.addLine(this.choosenProduct.getProduct(),instruc);
+            }
+            throw new AnySelectedMedicineException(" enter medicine guidelines");
+        }
+        throw new AnySelectedMedicineException(" cannot guideline for empty");
 
-    public void enterTreatmentEndingDate(Date date)throws IncorrectEndingDateException{}
+
+    }
+
+    public void enterTreatmentEndingDate(Date date)throws IncorrectEndingDateException{
+        Date today = Calendar.getInstance().getTime();
+        // Date future = new SimpleDateFormat("dd-MM-yyyy").parse("07-01-2023");
+        // posar a medicalprescription?
+        if (date.after(today)){
+            this.treatmentEndingDate = date;
+        }else {
+            throw  new IncorrectEndingDateException("Incorrect ending date");
+        }
+
+
+    }
 
     public void sendePrescription()throws ConnectException, NotValidePrescription, eSignatureException, NotCompletedMedicalPrescription{
         isFinishedPrescription = true;
+        DigitalSignature esign= new DigitalSignature("si");
+        medicalPrescription.seteSign(esign);
+        Random rand = new Random();
+        medicalPrescription.setPrescCode(rand.nextInt(1000000));
+        medicalPrescription = hns.sendePrescription(medicalPrescription);
     }
 
-    public void printePresc()throws printingException{}
-
-    // ????  Other methods, apart from the input events
-
-/*
-    @Override
-    public MedicalPrescription getePrescription(HealthCardID hcID) throws HealthCardException, NotValidePrescriptionException, ConnectException {
-
-        if (hcID ==  null) {
-            throw new HealthCardException("Not a HealtCard");
+    public void printePresc()throws printingException{
+        if (medicalPrescription == null) {
+            throw new printingException("Cannot print");
         }
-        /*
-         *moguda per conectarse al SNS
-         */
-        //Descarregar
-/*        return new MedicalPrescription();
     }
-
-    @Override
-    public List<ProductSpecification> getProductsByKW(String keyWord) throws AnyKeyWordMedicineException, ConnectException {
-
-        if (keyWord.equals("")) {
-            throw new AnyKeyWordMedicineException("No keyword input");
-        }
-
-        /*
-         *  conectarse al SNS
-         *  <--- Llista de productes(especificacions)
-         *
-         */
-
-
-/*
-        return new ArrayList<ProductSpecification>();
-    }
-
-    @Override
-    public ProductSpecification getProcuductSpecific(int opt) throws AnyMedicineSearchException, ConnectException {
-        /*
-         *  buscar medicina
-         *  No trobar ---> AnyMedicineSearchException
-         *  Trobat ------> return List<ProductSpecification> [opt][especificacions]
-         *
-         * */
-/*        return null;
-    }
-
-    @Override
-    public MedicalPrescription sendePrescription(MedicalPrescription ePresc) throws ConnectException, NotValidePrescription, eSignatureException, NotCompletedMedicalPrescription {
-        return null;
-    }
-*/
 }
