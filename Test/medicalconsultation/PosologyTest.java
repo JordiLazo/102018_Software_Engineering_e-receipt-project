@@ -1,13 +1,11 @@
 package medicalconsultation;
 
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PosologyTest {
-
+    Posology pos1;
     @BeforeEach
     void setUp(){
-
     }
 
 }

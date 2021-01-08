@@ -1,12 +1,8 @@
 package medicalconsultation;
 
-import data.HealthCardID;
 import data.ProductID;
-import exceptions.HealthCardException;
 import exceptions.ProductNotInPrescription;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 public class ProductSpecification {
     private String description;
@@ -17,7 +13,6 @@ public class ProductSpecification {
         this.product =  (ProductID) checkProductSpecification(product);
         this.description =  (String) checkProductSpecification(description);
         this.price = (BigDecimal) checkProductSpecification(price);
-
     }
 
     private Object checkProductSpecification(Object obj) throws ProductNotInPrescription{
@@ -36,8 +31,6 @@ public class ProductSpecification {
         }
         throw new ProductNotInPrescription("ERROR SI");
     }
-
-
 
     public String getProductID() {
         return product.getUPCcode();
@@ -66,12 +59,5 @@ public class ProductSpecification {
                 ", product UPC=" + product.getUPCcode() +
                 ", price=" + price +
                 '}';
-    }
-
-    public static void main(String[] args) throws ProductNotInPrescription {
-        ProductID y = new ProductID("ibuprofeno");
-        BigDecimal z = new BigDecimal("10.29");
-        ProductSpecification x = new ProductSpecification(y,"pastillas",z);
-        System.out.println(x.toString());
     }
 }

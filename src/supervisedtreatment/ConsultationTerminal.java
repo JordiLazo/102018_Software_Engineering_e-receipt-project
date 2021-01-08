@@ -2,15 +2,11 @@ package supervisedtreatment;
 
 import data.DigitalSignature;
 import data.HealthCardID;
-import data.ProductID;
 import exceptions.*;
 import medicalconsultation.MedicalPrescription;
 import medicalconsultation.ProductSpecification;
 import services.HealthNationalService;
 import services.ScheduledVisitAgenda;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ConsultationTerminal {
@@ -42,8 +38,6 @@ public class ConsultationTerminal {
         if (isFinishedPrescription){
             throw new AnyCurrentPrescriptionException("Error");
         }
-        //this.isFinishedPrescription = false;
-
     }
 
     public void searchForProducts(String keyWord)throws AnyKeyWordMedicineException, ConnectException{
@@ -69,21 +63,15 @@ public class ConsultationTerminal {
             throw new AnySelectedMedicineException(" enter medicine guidelines");
         }
         throw new AnySelectedMedicineException(" cannot guideline for empty");
-
-
     }
 
     public void enterTreatmentEndingDate(Date date)throws IncorrectEndingDateException{
         Date today = Calendar.getInstance().getTime();
-        // Date future = new SimpleDateFormat("dd-MM-yyyy").parse("07-01-2023");
-        // posar a medicalprescription?
         if (date.after(today)){
             this.treatmentEndingDate = date;
         }else {
             throw  new IncorrectEndingDateException("Incorrect ending date");
         }
-
-
     }
 
     public void sendePrescription()throws ConnectException, NotValidePrescription, eSignatureException, NotCompletedMedicalPrescription{

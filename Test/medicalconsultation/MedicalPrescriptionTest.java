@@ -21,12 +21,14 @@ class MedicalPrescriptionTest {
         mp2.addLine(p1,new String[]{"Today"});
     }
     @Test
-    @DisplayName("Check if the method addline is null, empty")
+    @DisplayName("Check if the method addline is possible to do")
     void checkAddline(){
         assertThrows(IncorrectTakingGuidelinesException.class,()-> mp1.addLine(p1,new String[]{}));
         assertThrows(IncorrectTakingGuidelinesException.class,()-> mp1.addLine(p1,null));
         assertDoesNotThrow(()-> mp1.addLine(p1,new String[]{" "}));
         assertDoesNotThrow(()-> mp1.addLine(p1,new String[]{""}));
+        assertThrows(IncorrectTakingGuidelinesException.class,()-> mp1.addLine(null,new String[]{""}));
+
     }
 
     @Test

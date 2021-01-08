@@ -14,7 +14,7 @@ class ProductIDTest {
     }
 
     @Test
-    @DisplayName("Check if the Product ID is null or empty")
+    @DisplayName("Check if the Product ID is null, empty or is an space")
     void checkUPCcode(){
         assertThrows(ProductNotInPrescription.class,()-> new ProductID(null));
         assertThrows(ProductNotInPrescription.class,()-> new ProductID(""));
