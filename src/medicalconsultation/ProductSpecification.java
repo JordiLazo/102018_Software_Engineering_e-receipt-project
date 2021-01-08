@@ -10,11 +10,19 @@ public class ProductSpecification {
     private ProductID product;
     private BigDecimal price;
 
-    public ProductSpecification(ProductID product, String description, BigDecimal price) {
+    public ProductSpecification(ProductID product, String description, BigDecimal price) throws ProductNotInPrescription {
         //UPC *description y price
-        this.product = product;
-        this.description = description;
-        this.price = price;
+        if(checkProductSpecification(product,description,price)){
+            this.product = product;
+            this.description = description;
+            this.price = price;
+        }else{
+            throw new ProductNotInPrescription("Error");
+        }
+
+    }
+    public boolean checkProductSpecification(ProductID product, String description, BigDecimal price){
+        return product != null && description != null && price != null;
     }
 
 
