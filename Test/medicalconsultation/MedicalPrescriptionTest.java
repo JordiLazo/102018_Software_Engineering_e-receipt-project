@@ -42,6 +42,7 @@ class MedicalPrescriptionTest {
     @DisplayName("Check if the removeline method is possible to do")
     void checkRemoveline(){
         assertThrows(ProductNotInPrescription.class,()-> mp2.removeLine(p3));
+
     }
 
 }
