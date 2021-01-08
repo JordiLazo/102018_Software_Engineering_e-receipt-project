@@ -32,6 +32,7 @@ public class MedicalPrescription {// A class that represents medical prescriptio
     public void addLine(ProductID prodID, String[] instruc) throws IncorrectTakingGuidelinesException {
 
         map.addLine(prodID,instruc);
+
     }
     public void modifyLine(ProductID prodID,String[] instruc)throws ProductNotInPrescription, IncorrectTakingGuidelinesException{
         map.modifyLine(prodID,instruc);

@@ -33,6 +33,7 @@ public class MedicalPrescriptionLine {
     public void removeLine(ProductID prodID) throws ProductNotInPrescription{
         if(prodID != null && map.containsKey(prodID)){
             map.remove(prodID);
+
         }else{
             throw new ProductNotInPrescription("Error in MedicalPrescriptionLine class: Can not remove line (invalid product)");
         }
