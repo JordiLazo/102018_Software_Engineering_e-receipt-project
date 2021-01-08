@@ -18,13 +18,18 @@ class ProductSpecificationTest {
     @BeforeEach
     void setUp() throws ProductNotInPrescription{
         p1 = new ProductID("123");
-        price = new BigDecimal(10.50);
-        ps1 = new ProductSpecification(p1,"medicine",price);
-    }
+        price = new BigDecimal("10.20");
 
+    }
+    @DisplayName("null description")
     @Test
     void checkProductSpecification(){
         assertThrows(ProductNotInPrescription.class,()-> new ProductSpecification(p1,null,price));
+    }
+    @DisplayName("empty description")
+    @Test
+    void checkProductSpecification_empty(){
+        assertThrows(ProductNotInPrescription.class,()-> new ProductSpecification(p1,"",null));
     }
 
 
