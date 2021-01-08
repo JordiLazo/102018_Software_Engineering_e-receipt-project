@@ -13,7 +13,7 @@ public class MedicalPrescriptionLine {
 
     public void addLine(ProductID prodID,String[] instruc)throws IncorrectTakingGuidelinesException {
         if(!map.containsKey(prodID)){
-            if (prodID != null && instruc.length!=0 ) {
+            if (prodID != null && instruc != null && instruc.length!=0 ) {
                 map.put(prodID,instruc);
             }else {
                 throw new IncorrectTakingGuidelinesException("Error in MedicalPrescriptionLine class: Can not add line");
@@ -22,7 +22,7 @@ public class MedicalPrescriptionLine {
     }
     public void modifyLine(ProductID prodID,String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException{
         if(map.containsKey(prodID)){
-            if (prodID != null && instruc.length!=0) {
+            if (prodID != null && instruc != null && instruc.length!=0) {
                 map.put(prodID,instruc);
             }else {
                 throw new IncorrectTakingGuidelinesException("Error in MedicalPrescriptionLine class: Can not modify line (invalid format)");
@@ -31,7 +31,7 @@ public class MedicalPrescriptionLine {
         throw new ProductNotInPrescription("Error in MedicalPrescriptionLine class: Can not modify line (invalid product)");
     }
     public void removeLine(ProductID prodID) throws ProductNotInPrescription{
-        if(map.containsKey(prodID)){
+        if(prodID != null && map.containsKey(prodID)){
             map.remove(prodID);
         }else{
             throw new ProductNotInPrescription("Error in MedicalPrescriptionLine class: Can not remove line (invalid product)");
