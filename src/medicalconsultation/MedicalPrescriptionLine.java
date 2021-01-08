@@ -2,7 +2,8 @@ package medicalconsultation;
 
 import data.*;
 import exceptions.*;
-import java.util.HashMap;
+
+import java.util.*;
 
 public class MedicalPrescriptionLine {
     public final HashMap<ProductID, String[]> map;
@@ -38,5 +39,19 @@ public class MedicalPrescriptionLine {
             throw new ProductNotInPrescription("Error in MedicalPrescriptionLine class: Can not remove line (invalid product)");
         }
     }
+    public Set<HashMap<String, String>> items() {
 
+        Set<HashMap<String, String>> items = new HashSet<>();
+        for (ProductID key: this.map.keySet()) {
+            HashMap<String, String> a = new HashMap<>();
+            a.put(key.getUPCcode(), Arrays.toString(this.map.get(key)));
+            items.add(a);
+        }
+        return items;
+    }
+
+    @Override
+    public String toString() {
+        return items().toString();
+    }
 }

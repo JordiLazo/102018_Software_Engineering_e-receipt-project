@@ -7,6 +7,7 @@ import exceptions.IncorrectTakingGuidelinesException;
 import exceptions.ProductNotInPrescription;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -83,10 +84,15 @@ public class MedicalPrescription {// A class that represents medical prescriptio
         this.eSign = eSign;
     }
 
-    public static void main(String[] args) throws ProductNotInPrescription, IncorrectTakingGuidelinesException {
-        MedicalPrescription t1 = new MedicalPrescription();
-        ProductID d1 = new ProductID("123");
-        t1.addLine(d1, new String[]{"hola"});
-        System.out.println(t1);
+    @Override
+    public String toString() {
+        return "MedicalPrescription{" +"\n"+
+                ", prescCode=" + prescCode +"\n"+
+                ", prescStartDate=" + prescDate +"\n"+
+                ", endDate=" + endDate +"\n"+
+                ", hcID=" + hcID +"\n"+
+                ", eSign=" + Arrays.toString(eSign.getDigitalSignature()) +"\n"+
+                ", MedicalPrescriptionLines=" + map.toString() +
+                '}';
     }
 }
