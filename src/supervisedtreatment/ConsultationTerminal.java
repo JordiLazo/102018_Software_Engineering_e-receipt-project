@@ -24,9 +24,21 @@ public class ConsultationTerminal {
     public ConsultationTerminal() {
 
     }
+    ////////////////////////////////////////////////////////
+    public void setHns(HealthNationalService hns) {
+        this.hns = hns;
+    }
+
+    public void setSva(ScheduledVisitAgenda sva) {
+        this.sva = sva;
+    }
+    ////////////////////////////////////////////////////////
 
     public void initRevision()throws HealthCardException,  NotValidePrescriptionException, ConnectException {
+        this.isFinishedPrescription = false;
+
         hc = sva.getHealthCardID();
+
         if (hc == null) {
             throw new HealthCardException("Invalid card");
         }
@@ -66,6 +78,7 @@ public class ConsultationTerminal {
     }
 
     public void enterTreatmentEndingDate(Date date)throws IncorrectEndingDateException{
+        this.isFinishedPrescription = true;
         Date today = Calendar.getInstance().getTime();
         if (date.after(today)){
             this.treatmentEndingDate = date;
@@ -75,12 +88,16 @@ public class ConsultationTerminal {
     }
 
     public void sendePrescription()throws ConnectException, NotValidePrescription, eSignatureException, NotCompletedMedicalPrescription{
-        isFinishedPrescription = true;
-        DigitalSignature esign= new DigitalSignature("si");
-        medicalPrescription.seteSign(esign);
-        Random rand = new Random();
-        medicalPrescription.setPrescCode(rand.nextInt(1000000));
-        medicalPrescription = hns.sendePrescription(medicalPrescription);
+        if (this.isFinishedPrescription){
+            DigitalSignature esign= new DigitalSignature("si");
+            medicalPrescription.seteSign(esign);
+            Random rand = new Random();
+            medicalPrescription.setPrescCode(rand.nextInt(1000000));
+            medicalPrescription = hns.sendePrescription(medicalPrescription);
+        }else {
+            throw  new NotCompletedMedicalPrescription("Not completed");
+        }
+
     }
 
     public void printePresc()throws printingException{

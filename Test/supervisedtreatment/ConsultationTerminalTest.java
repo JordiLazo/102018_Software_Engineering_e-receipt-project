@@ -16,24 +16,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class ConsultationTerminalTest {
     ConsultationTerminal ct1;
+    ScheduledVisitAgenda sva1;
     HealthNationalService hns1;
     @BeforeEach
     void setUp() throws NotValidePrescriptionException, HealthCardException, ConnectException, IncorrectTakingGuidelinesException, ProductNotInPrescription, eSignatureException, ParseException {
         hns1 = new HNS();
+        sva1 = new ScheduledVisitAgendaImpl();
+
         ct1 = new ConsultationTerminal();
+        ct1.setHns(hns1);
+        ct1.setSva(sva1);
 
     }
 
     @Test
     @DisplayName("Check if initRevision is correct")
     void checkinitRevision(){
+        assertDoesNotThrow(()->ct1.initRevision());
+        assertFalse(ct1.isFinishedPrescription);
+        assertNotNull(ct1.medicalPrescription);
 
     }
+
+
     private  static class ScheduledVisitAgendaImpl implements ScheduledVisitAgenda {
         public HealthCardID visit1 = new HealthCardID("BBBBBBBBQR784518965123478958");
-
 
 
         private ScheduledVisitAgendaImpl() throws HealthCardException {
@@ -46,14 +57,12 @@ class ConsultationTerminalTest {
         }
     }
 
-
-
-
     private static class HNS implements HealthNationalService{
         private MedicalPrescription medicalPrescription = generate_Fake_medical_presc();
         private final HashMap<String, ArrayList<ProductSpecification>> productsByKw = generate_Fake_products();
+        private ArrayList<ProductSpecification> session_selected;
 
-
+        // genearar fakes
         private HashMap<String, ArrayList<ProductSpecification>> generate_Fake_products() throws ProductNotInPrescription {
             ProductID pd1 = new ProductID("0001");//frenadol
             ProductID pd2 = new ProductID("0002");;//migrastick
@@ -101,7 +110,7 @@ class ConsultationTerminalTest {
             mp.seteSign(new DigitalSignature("Dr. Ferran"));
             mp.setHcID(new HealthCardID("BBBBBBBBQR111111111111111111"));
             mp.setPrescCode(11223344);
-            System.out.println(mp.toString());
+            //System.out.println(mp.toString());
 
             return mp;
         }
@@ -121,6 +130,7 @@ class ConsultationTerminalTest {
         public List<ProductSpecification> getProductsByKW(String keyWord) throws AnyKeyWordMedicineException, ConnectException {
 
             if (this.productsByKw.containsKey(keyWord)){
+                this.session_selected = this.productsByKw.get(keyWord);
                 return this.productsByKw.get(keyWord);
             }
             throw new AnyKeyWordMedicineException("NOT FOUND");
@@ -129,7 +139,7 @@ class ConsultationTerminalTest {
             * Productes del sns
             * [ maldecap ][ frenadol, migrastick]
             * [ refredat ][ Efergalan, Frenadol, Ibuprofeno]
-            * [ Dolor muscular ][Ibuprofeno,Gelocatil,Paracetamol]
+            * [ muscular ][Ibuprofeno,Gelocatil,Paracetamol]
             *
             *
             * getProductsByKW(Refredat) --> [ Efergalan, Frenadol, Ibuprofeno]
@@ -139,7 +149,10 @@ class ConsultationTerminalTest {
 
         @Override
         public ProductSpecification getProcuductSpecific(int opt) throws AnyMedicineSearchException, ConnectException {
-            return null;
+            if (0<=opt && opt <this.session_selected.size()){
+                return this.session_selected.get(opt);
+            }
+            throw new AnyMedicineSearchException("No selection");
         }
 
         @Override
