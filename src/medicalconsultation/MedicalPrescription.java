@@ -81,4 +81,10 @@ public class MedicalPrescription {// A class that represents medical prescriptio
         this.eSign = eSign;
     }
 
+    public static void main(String[] args) throws ProductNotInPrescription, IncorrectTakingGuidelinesException {
+        MedicalPrescription t1 = new MedicalPrescription();
+        ProductID d1 = new ProductID("123");
+        t1.addLine(d1, new String[]{"hola"});
+        System.out.println(t1);
+    }
 }

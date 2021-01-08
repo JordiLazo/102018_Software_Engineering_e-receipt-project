@@ -16,15 +16,16 @@ class DigitalSignatureTest {
     }
 
     @Test
-    @DisplayName("Check if two Digital Signatures istances are the same")
+    @DisplayName("Check if two Digital Signatures instances are the same")
     void checkBytesDigitalSignature(){
         assertArrayEquals(d1.getDigitalSignature(),d2.getDigitalSignature());
     }
 
     @Test
-    @DisplayName("Check if a Digital Signature is null")
+    @DisplayName("Check if a Digital Signature is null or empty")
     void checkDigitalSignature() {
         assertThrows(eSignatureException.class,()-> new DigitalSignature(null));
+        assertThrows(eSignatureException.class,()-> new DigitalSignature(""));
     }
 
     @Test

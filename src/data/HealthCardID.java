@@ -21,10 +21,10 @@ final public class HealthCardID{
             if(isValidFormat(code)){
                return code;
             }else {
-                throw new HealthCardException("Invalid HealtCard Id format");
+                throw new HealthCardException("Error in HealthCardID class: Invalid HealtCardID format");
             }
         }
-        throw new HealthCardException("Error null code");
+        throw new HealthCardException("Error in HealthCardID class: Invalid HealtCardID format (null)");
     }
 
     private boolean isValidFormat(String code) {

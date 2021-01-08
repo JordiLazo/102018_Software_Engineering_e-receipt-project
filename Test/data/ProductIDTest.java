@@ -18,6 +18,7 @@ class ProductIDTest {
     void checkUPCcode(){
         assertThrows(ProductNotInPrescription.class,()-> new ProductID(null));
         assertThrows(ProductNotInPrescription.class,()-> new ProductID(""));
+        assertThrows(ProductNotInPrescription.class,()-> new ProductID(" "));
     }
 
     @Test

@@ -16,8 +16,8 @@ public class DigitalSignature {
     }
 
     public byte[] checkDigitalSignature(String medicalSignature) throws eSignatureException {
-        if (medicalSignature == null){
-            throw new eSignatureException("Invalid signature");
+        if (medicalSignature == null || medicalSignature == ""){
+            throw new eSignatureException("Error in DigitalSignature class: Invalid signature");
         }
         //we sure medicalSignature not null
         return medicalSignature.getBytes();
@@ -45,11 +45,6 @@ public class DigitalSignature {
         return "DigitalSignature{" +
                 "DigitalSignature='" + Arrays.toString(eSignature) + '\'' +
                 '}';
-    }
-
-    public static void main(String[] args) throws eSignatureException {
-        DigitalSignature d1 = new DigitalSignature("Dr.Ferran");
-        System.out.println(d1.getDigitalSignature());
     }
 
 }

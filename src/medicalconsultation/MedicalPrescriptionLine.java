@@ -13,12 +13,11 @@ public class MedicalPrescriptionLine {
 
     public void addLine(ProductID prodID,String[] instruc)throws IncorrectTakingGuidelinesException {
         if(!map.containsKey(prodID)){
-            if (prodID != null && instruc.length!=0) {
+            if (prodID != null && instruc.length!=0 ) {
                 map.put(prodID,instruc);
             }else {
-                throw new IncorrectTakingGuidelinesException("Cannot add: Incorrect Format");
+                throw new IncorrectTakingGuidelinesException("Error in MedicalPrescriptionLine class: Can not add line");
             }
-
         }
     }
     public void modifyLine(ProductID prodID,String[] instruc) throws ProductNotInPrescription, IncorrectTakingGuidelinesException{
@@ -26,26 +25,17 @@ public class MedicalPrescriptionLine {
             if (prodID != null && instruc.length!=0) {
                 map.put(prodID,instruc);
             }else {
-                throw new IncorrectTakingGuidelinesException("Cannot modify: Incorrect Format");
+                throw new IncorrectTakingGuidelinesException("Error in MedicalPrescriptionLine class: Can not modify line (invalid format)");
             }
         }
-        throw new ProductNotInPrescription("Cannot modify: Not found product ");
+        throw new ProductNotInPrescription("Error in MedicalPrescriptionLine class: Can not modify line (invalid product)");
     }
     public void removeLine(ProductID prodID) throws ProductNotInPrescription{
         if(map.containsKey(prodID)){
             map.remove(prodID);
         }else{
-            throw new ProductNotInPrescription("Cannot remove non existent product ");
+            throw new ProductNotInPrescription("Error in MedicalPrescriptionLine class: Can not remove line (invalid product)");
         }
     }
 
 }
-/*
-Prescipció
-{
-codi1:<>
-codi2:<>
-
-}
-
- */

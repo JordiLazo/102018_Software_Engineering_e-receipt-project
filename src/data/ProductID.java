@@ -11,10 +11,10 @@ public class ProductID {
     }
 
     public String checkUPCcode(String productcode) throws ProductNotInPrescription {
-        if (productcode != null && !productcode.equals("")){
+        if (productcode != null && !productcode.equals("") && !productcode.equals(" ")){
             return productcode;
         }
-        throw new ProductNotInPrescription("Invalid product");
+        throw new ProductNotInPrescription("Error in ProductID class: Invalid product");
     }
 
     public String getUPCcode() {
