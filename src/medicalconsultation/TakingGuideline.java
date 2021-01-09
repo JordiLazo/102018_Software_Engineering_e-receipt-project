@@ -6,11 +6,11 @@ public class TakingGuideline {
     private String instructions;
     private Posology posology;
 
-    public TakingGuideline(dayMoment dM, float du, String i, float d, float f, FqUnit u){
-        this.dMoment = dM;
-        this.duration = du;
-        this.instructions = i;
-        this.posology = new Posology(d,f,u);
+    public TakingGuideline(dayMoment dayMoment, float duration, String instructions, float dose, float freq, FqUnit freqUnit){
+        this.dMoment = dayMoment;
+        this.duration = duration;
+        this.instructions = instructions;
+        this.posology = new Posology(dose,freq,freqUnit);
     }
 
     public dayMoment getdMoment() {

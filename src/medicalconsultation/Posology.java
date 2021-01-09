@@ -1,14 +1,16 @@
 package medicalconsultation;
 
+import java.util.Objects;
+
 public class Posology { // A class that represents the posology of amedicine
     private float dose;
     private float freq;
     private FqUnit freqUnit;
 
-    public Posology (float d, float f, FqUnit u){
-        this.dose = d;
-        this.freq = f;
-        this.freqUnit = u;
+    public Posology (float dose, float freq, FqUnit freqUnit){
+        this.dose = dose;
+        this.freq = freq;
+        this.freqUnit = freqUnit;
     }
 
     public float getDose() {
@@ -43,8 +45,16 @@ public class Posology { // A class that represents the posology of amedicine
                 '}';
     }
 
-    public static void main(String[] args) {
-        Posology p1 = new Posology((float)1.1,(float)2.2,FqUnit.WEEK);
-        System.out.println(p1);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Posology)) return false;
+        Posology posology = (Posology) o;
+        return Float.compare(posology.getDose(), getDose()) == 0 && Float.compare(posology.getFreq(), getFreq()) == 0 && getFreqUnit() == posology.getFreqUnit();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDose(), getFreq(), getFreqUnit());
     }
 }
