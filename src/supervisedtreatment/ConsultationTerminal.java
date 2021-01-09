@@ -17,8 +17,8 @@ public class ConsultationTerminal {
 
     boolean isFinishedPrescription;//by default it is initiated to false
     List<ProductSpecification> list_of_products;
-    private ProductSpecification choosenProduct;
-    private Date treatmentEndingDate =null;
+    public ProductSpecification choosenProduct;
+    public Date treatmentEndingDate =null;
 
 
     public ConsultationTerminal() {
@@ -43,6 +43,7 @@ public class ConsultationTerminal {
             throw new HealthCardException("Invalid card");
         }
         medicalPrescription = hns.getePrescription(hc);
+
     }
 
     public void initPrescriptionEdition()throws AnyCurrentPrescriptionException, NotFinishedTreatmentException{
@@ -55,15 +56,18 @@ public class ConsultationTerminal {
     public void searchForProducts(String keyWord)throws AnyKeyWordMedicineException, ConnectException{
         if (!keyWord.equals("")) {
             this.list_of_products = hns.getProductsByKW(keyWord);
-        }throw new AnyKeyWordMedicineException("No keyword");
+
+        }else{throw new AnyKeyWordMedicineException("No keyword");}
     }
 
     public void selectProduct(int option)throws  AnyMedicineSearchException, ConnectException{
         if (list_of_products != null) {
             if (0<=option && option <this.list_of_products.size()){
                 this.choosenProduct= hns.getProcuductSpecific(option);
+            }else {
+                throw new AnyMedicineSearchException("Out of list");
             }
-        }
+        }else {throw new AnyMedicineSearchException("you have no list");}
     }
 
     public void enterMedicineGuidelines(String[] instruc)throws
@@ -71,16 +75,14 @@ public class ConsultationTerminal {
         if (choosenProduct != null) {
             if (instruc.length !=0) {
                 medicalPrescription.addLine(this.choosenProduct.getProduct(),instruc);
-            }
-            throw new AnySelectedMedicineException(" enter medicine guidelines");
-        }
-        throw new AnySelectedMedicineException(" cannot guideline for empty");
+            }else { throw new AnySelectedMedicineException(" enter medicine guidelines");}
+        }else{ throw new AnySelectedMedicineException(" cannot guideline for empty");}
     }
 
     public void enterTreatmentEndingDate(Date date)throws IncorrectEndingDateException{
         this.isFinishedPrescription = true;
         Date today = Calendar.getInstance().getTime();
-        if (date.after(today)){
+        if (date!=null && date.after(today)){
             this.treatmentEndingDate = date;
         }else {
             throw  new IncorrectEndingDateException("Incorrect ending date");
