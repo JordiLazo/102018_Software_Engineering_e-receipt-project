@@ -1,5 +1,7 @@
 package supervisedtreatment;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import data.DigitalSignature;
 import data.HealthCardID;
@@ -15,23 +17,26 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConsultationTerminalTest {
+
     ConsultationTerminal ct1;
-    ScheduledVisitAgenda sva1;
-    HealthNationalService hns1;
-    @BeforeEach
-    void setUp() throws NotValidePrescriptionException, HealthCardException, ConnectException, IncorrectTakingGuidelinesException, ProductNotInPrescription, eSignatureException, ParseException {
+    static ScheduledVisitAgenda sva1;
+    static HealthNationalService hns1;
+    @BeforeAll
+    static void general_setup() throws HealthCardException, eSignatureException, ProductNotInPrescription, IncorrectTakingGuidelinesException, ParseException {
         hns1 = new HNS();
         sva1 = new ScheduledVisitAgendaImpl();
+    }
 
+    @BeforeEach
+    void setUp() {
         ct1 = new ConsultationTerminal();
         ct1.setHns(hns1);
         ct1.setSva(sva1);
-
     }
+
 
     @Test
     @DisplayName("Check if initRevision is correct")
@@ -40,6 +45,163 @@ class ConsultationTerminalTest {
         assertFalse(ct1.isFinishedPrescription);
         assertNotNull(ct1.medicalPrescription);
 
+    }
+
+
+    @Test
+    void initPrescriptionEdition() {
+        // ??
+    }
+
+    @DisplayName("searchForProducts with no keyword")
+    @Test
+    void searchForProducts() {
+        assertThrows(AnyKeyWordMedicineException.class,()->ct1.searchForProducts(""));
+    }
+    @DisplayName("searchForProducts with keyword")
+    @Test
+    void searchForProducts_2() {
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+
+    }
+    @DisplayName("select product option 0")
+    @Test
+    void selectProduct_opt0() {
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertDoesNotThrow(()->ct1.selectProduct(0));
+        assertNotNull(ct1.choosenProduct);
+
+    }
+    @DisplayName("select product option out index")
+    @Test
+    void selectProduct_opt_out_bounds() {
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertThrows(AnyMedicineSearchException.class,()->ct1.selectProduct(31));
+        assertNull(ct1.choosenProduct);
+
+    }
+    @DisplayName("select product option but list is null")
+    @Test
+    void selectProduct_in_no_list() {
+        assertThrows(AnyMedicineSearchException.class,()->ct1.selectProduct(31));
+        assertNull(ct1.choosenProduct);
+
+    }
+    @DisplayName("Enter medicine Guidelines but chosen product is null")
+    @Test
+    void enterMedicineGuidelines() {
+        assertThrows(AnySelectedMedicineException.class,()->ct1.enterMedicineGuidelines(new String[]{"Sampe Guidelines"}));
+    }
+    @DisplayName("Enter medicine Guidelines but Guidelines list are empty")
+    @Test
+    void enterMedicineGuidelines_2() {
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertDoesNotThrow(()->ct1.selectProduct(0));
+        assertNotNull(ct1.choosenProduct);
+        assertThrows(AnySelectedMedicineException.class,()->ct1.enterMedicineGuidelines(new String[]{}));
+    }
+    @DisplayName("Enter medicine Guidelines in correct form")
+    @Test
+    void enterMedicineGuidelines_3() {
+        assertDoesNotThrow(()->ct1.initRevision());
+        assertFalse(ct1.isFinishedPrescription);
+        assertNotNull(ct1.medicalPrescription);
+
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertDoesNotThrow(()->ct1.selectProduct(0));
+        assertNotNull(ct1.choosenProduct);
+        assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
+    }
+
+    @DisplayName("enterTreatmentEndingDate but is before start treatment")
+    @Test
+    void enterTreatmentEndingDate() {
+        assertDoesNotThrow(()->ct1.initRevision());
+        assertFalse(ct1.isFinishedPrescription);
+        assertNotNull(ct1.medicalPrescription);
+
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertDoesNotThrow(()->ct1.selectProduct(0));
+        assertNotNull(ct1.choosenProduct);
+        assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
+
+        assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/1999")));
+
+
+    }
+
+    @DisplayName("enterTreatmentEndingDate but its equal at  start treatment")
+    @Test
+    void enterTreatmentEndingDate_1() {
+        assertDoesNotThrow(()->ct1.initRevision());
+        assertFalse(ct1.isFinishedPrescription);
+        assertNotNull(ct1.medicalPrescription);
+
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertDoesNotThrow(()->ct1.selectProduct(0));
+        assertNotNull(ct1.choosenProduct);
+        assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
+        assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2000")));
+    }
+
+    @DisplayName("enterTreatmentEndingDate but its incorrect format")
+    @Test
+    void enterTreatmentEndingDate_2() {
+        assertDoesNotThrow(()->ct1.initRevision());
+        assertFalse(ct1.isFinishedPrescription);
+        assertNotNull(ct1.medicalPrescription);
+
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertDoesNotThrow(()->ct1.selectProduct(0));
+        assertNotNull(ct1.choosenProduct);
+        assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
+        assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(null));
+    }
+
+    @DisplayName("enterTreatmentEndingDate in correct format")
+    @Test
+    void enterTreatmentEndingDate_3() {
+        assertDoesNotThrow(()->ct1.initRevision());
+        assertFalse(ct1.isFinishedPrescription);
+        assertNotNull(ct1.medicalPrescription);
+
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertDoesNotThrow(()->ct1.selectProduct(0));
+        assertNotNull(ct1.choosenProduct);
+        assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
+        assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2021")));
+    }
+    @DisplayName("Sending e-prescription but it's not completed")
+    @Test
+    void sendePrescription() {
+        assertThrows(NotCompletedMedicalPrescription.class,()->ct1.sendePrescription());
+        assertNull(ct1.medicalPrescription);
+    }
+    @DisplayName("Sending e-prescription ")
+    @Test
+    void sendePrescription_1() {
+        assertDoesNotThrow(()->ct1.initRevision());
+        assertFalse(ct1.isFinishedPrescription);
+        assertNotNull(ct1.medicalPrescription);
+
+        assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
+        assertNotNull(ct1.list_of_products);
+        assertDoesNotThrow(()->ct1.selectProduct(0));
+        assertNotNull(ct1.choosenProduct);
+        assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
+        assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2021")));
+
+        assertDoesNotThrow(()->ct1.sendePrescription());
+        assertNotNull(ct1.medicalPrescription);
     }
 
 
@@ -58,12 +220,14 @@ class ConsultationTerminalTest {
     }
 
     private static class HNS implements HealthNationalService{
+        private static String STARTING_FAKE_TREATMENT_DATE="23/3/2019";
+        private static String ENDING_FAKE_TREATMENT_DATE="23/3/2020";
         private MedicalPrescription medicalPrescription = generate_Fake_medical_presc();
-        private final HashMap<String, ArrayList<ProductSpecification>> productsByKw = generate_Fake_products();
+        private final HashMap<String, ArrayList<ProductSpecification>> productsByKw = generate_Fake_products_indexed_by_KW();
         private ArrayList<ProductSpecification> session_selected;
 
         // genearar fakes
-        private HashMap<String, ArrayList<ProductSpecification>> generate_Fake_products() throws ProductNotInPrescription {
+        private HashMap<String, ArrayList<ProductSpecification>> generate_Fake_products_indexed_by_KW() throws ProductNotInPrescription {
             ProductID pd1 = new ProductID("0001");//frenadol
             ProductID pd2 = new ProductID("0002");;//migrastick
             ProductID pd3 = new ProductID("0003");;//Efergalan
@@ -104,8 +268,8 @@ class ConsultationTerminalTest {
             mp.addLine(new ProductID("1234"),new String[]{"Instruccions Acisteilina"});
             mp.addLine(new ProductID("12345"),new String[]{"Instruccions frenadol"});
 
-            mp.setPrescDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2019"));
-            mp.setEndDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2021"));
+            mp.setPrescDate(new SimpleDateFormat("dd/MM/yyyy").parse(STARTING_FAKE_TREATMENT_DATE));
+            mp.setEndDate(new SimpleDateFormat("dd/MM/yyyy").parse(ENDING_FAKE_TREATMENT_DATE));
 
             mp.seteSign(new DigitalSignature("Dr. Ferran"));
             mp.setHcID(new HealthCardID("BBBBBBBBQR111111111111111111"));
@@ -130,21 +294,22 @@ class ConsultationTerminalTest {
         public List<ProductSpecification> getProductsByKW(String keyWord) throws AnyKeyWordMedicineException, ConnectException {
 
             if (this.productsByKw.containsKey(keyWord)){
+
                 this.session_selected = this.productsByKw.get(keyWord);
                 return this.productsByKw.get(keyWord);
             }
             throw new AnyKeyWordMedicineException("NOT FOUND");
 
             /*
-            * Productes del sns
-            * [ maldecap ][ frenadol, migrastick]
-            * [ refredat ][ Efergalan, Frenadol, Ibuprofeno]
-            * [ muscular ][Ibuprofeno,Gelocatil,Paracetamol]
-            *
-            *
-            * getProductsByKW(Refredat) --> [ Efergalan, Frenadol, Ibuprofeno]
+             * Productes del sns
+             * [ maldecap ][ frenadol, migrastick]
+             * [ refredat ][ Efergalan, Frenadol, Ibuprofeno]
+             * [ muscular ][Ibuprofeno,Gelocatil,Paracetamol]
              *
-            * */
+             *
+             * getProductsByKW(Refredat) --> [ Efergalan, Frenadol, Ibuprofeno]
+             *
+             * */
         }
 
         @Override
