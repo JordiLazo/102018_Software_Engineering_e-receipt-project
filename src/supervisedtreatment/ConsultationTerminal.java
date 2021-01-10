@@ -47,7 +47,6 @@ public class ConsultationTerminal {
     }
 
     public void initPrescriptionEdition()throws AnyCurrentPrescriptionException, NotFinishedTreatmentException{
-
         if (isFinishedPrescription){
             throw new AnyCurrentPrescriptionException("Error");
         }

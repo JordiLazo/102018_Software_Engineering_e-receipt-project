@@ -37,7 +37,6 @@ class ConsultationTerminalTest {
         ct1.setSva(sva1);
     }
 
-
     @Test
     @DisplayName("Check if initRevision is correct")
     void checkinitRevision(){
@@ -46,12 +45,12 @@ class ConsultationTerminalTest {
         assertNotNull(ct1.medicalPrescription);
 
     }
-
-
     @Test
     void initPrescriptionEdition() {
         // ??
     }
+
+
 
     @DisplayName("searchForProducts with no keyword")
     @Test
@@ -66,6 +65,8 @@ class ConsultationTerminalTest {
 
     }
     @DisplayName("select product option 0")
+
+
     @Test
     void selectProduct_opt0() {
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
@@ -91,6 +92,7 @@ class ConsultationTerminalTest {
 
     }
     @DisplayName("Enter medicine Guidelines but chosen product is null")
+
     @Test
     void enterMedicineGuidelines() {
         assertThrows(AnySelectedMedicineException.class,()->ct1.enterMedicineGuidelines(new String[]{"Sampe Guidelines"}));
@@ -117,6 +119,8 @@ class ConsultationTerminalTest {
         assertNotNull(ct1.choosenProduct);
         assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
     }
+
+
 
     @DisplayName("enterTreatmentEndingDate but is before start treatment")
     @Test
@@ -181,6 +185,9 @@ class ConsultationTerminalTest {
         assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2021")));
     }
     @DisplayName("Sending e-prescription but it's not completed")
+
+
+
     @Test
     void sendePrescription() {
         assertThrows(NotCompletedMedicalPrescription.class,()->ct1.sendePrescription());
