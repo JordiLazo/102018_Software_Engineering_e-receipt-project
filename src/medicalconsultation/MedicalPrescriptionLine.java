@@ -54,4 +54,18 @@ public class MedicalPrescriptionLine {
     public String toString() {
         return items().toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MedicalPrescriptionLine)) return false;
+        MedicalPrescriptionLine line = (MedicalPrescriptionLine) o;
+        return this.items().equals(line.items());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return map.hashCode();
+    }
 }

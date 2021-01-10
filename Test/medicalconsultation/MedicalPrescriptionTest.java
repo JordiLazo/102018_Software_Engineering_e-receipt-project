@@ -16,7 +16,7 @@ class MedicalPrescriptionTest {
         mp1 = new MedicalPrescription();
         mp2 = new MedicalPrescription();
         p1 = new ProductID("123");
-        p2 = new ProductID("123");
+        p2 = new ProductID("1234");
         p3 = new ProductID("111");
         mp2.addLine(p1,new String[]{"Today"});
     }
@@ -44,6 +44,24 @@ class MedicalPrescriptionTest {
     @DisplayName("Check if the removeline method is possible to do")
     void checkRemoveline(){
         assertThrows(ProductNotInPrescription.class,()-> mp2.removeLine(p3));
+    }
+
+    @Test
+    void previewMedicalPrescriptionLines() throws IncorrectTakingGuidelinesException {
+        assertDoesNotThrow(()->mp2.addLine(p2,new String[]{"Today"}));
+        assertDoesNotThrow(()->mp2.addLine(p3,new String[]{"Today"}));
+
+        // MAP
+        MedicalPrescriptionLine line = new MedicalPrescriptionLine();
+        line.addLine(p1,new String[]{"Today"});
+        line.addLine(p2,new String[]{"Today"});
+        line.addLine(p3,new String[]{"Today"});
+
+        assertEquals(line,mp2.getMedicalPrescriptionLine());
+
+
+
+
     }
 
 }

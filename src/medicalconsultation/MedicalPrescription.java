@@ -85,6 +85,10 @@ public class MedicalPrescription {// A class that represents medical prescriptio
         this.eSign = eSign;
     }
 
+    public MedicalPrescriptionLine getMedicalPrescriptionLine(){
+        return map;
+    }
+
     @Override
     public String toString() {
         return "MedicalPrescription{" +"\n"+
