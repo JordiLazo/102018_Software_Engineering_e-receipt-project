@@ -20,8 +20,9 @@ class MedicalPrescriptionTest {
         p3 = new ProductID("111");
         mp2.addLine(p1,new String[]{"Today"});
     }
-    @Test
+
     @DisplayName("Check if the method addline is possible to do")
+    @Test
     void checkAddline(){
         assertThrows(IncorrectTakingGuidelinesException.class,()-> mp1.addLine(p1,new String[]{}));
         assertThrows(IncorrectTakingGuidelinesException.class,()-> mp1.addLine(p1,null));
@@ -31,37 +32,31 @@ class MedicalPrescriptionTest {
 
     }
 
-    @Test
     @DisplayName("Check if the method modifyline is possible to do")
-    void checkModifyline(){
-        assertThrows(IncorrectTakingGuidelinesException.class,()-> mp2.modifyLine(p2,new String[]{}));
+    @Test
+    void checkModifyLine(){
+        assertThrows(ProductNotInPrescription.class,()-> mp2.modifyLine(p2,new String[]{}));
         assertThrows(ProductNotInPrescription.class,()->mp2.modifyLine(p2,new String[]{" "}));
         assertThrows(ProductNotInPrescription.class,()->mp2.modifyLine(p2,new String[]{""}));
-        assertThrows(IncorrectTakingGuidelinesException.class,()->mp2.modifyLine(p2,null));
+        assertThrows(ProductNotInPrescription.class,()->mp2.modifyLine(p2,null));
     }
 
-    @Test
     @DisplayName("Check if the removeline method is possible to do")
-    void checkRemoveline(){
+    @Test
+    void checkRemoveLine(){
         assertThrows(ProductNotInPrescription.class,()-> mp2.removeLine(p3));
     }
 
+    @DisplayName("Check if the previewMedicalPrescriptionLines is equal to the number of addLine added")
     @Test
-    void previewMedicalPrescriptionLines() throws IncorrectTakingGuidelinesException {
+    void checkPreviewMedicalPrescriptionLines() throws IncorrectTakingGuidelinesException {
         assertDoesNotThrow(()->mp2.addLine(p2,new String[]{"Today"}));
         assertDoesNotThrow(()->mp2.addLine(p3,new String[]{"Today"}));
-
-        // MAP
         MedicalPrescriptionLine line = new MedicalPrescriptionLine();
         line.addLine(p1,new String[]{"Today"});
         line.addLine(p2,new String[]{"Today"});
         line.addLine(p3,new String[]{"Today"});
-
         assertEquals(line,mp2.getMedicalPrescriptionLine());
-
-
-
-
     }
 
 }

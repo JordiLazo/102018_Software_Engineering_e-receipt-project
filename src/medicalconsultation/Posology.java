@@ -36,6 +36,7 @@ public class Posology { // A class that represents the posology of amedicine
     public void setFreqUnit(FqUnit freqUnit) {
         this.freqUnit = freqUnit;
     }
+
     @Override
     public String toString() {
         return "Posology{" +

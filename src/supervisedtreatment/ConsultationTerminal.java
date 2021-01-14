@@ -24,7 +24,6 @@ public class ConsultationTerminal {
     public ConsultationTerminal() {
 
     }
-    ////////////////////////////////////////////////////////
     public void setHns(HealthNationalService hns) {
         this.hns = hns;
     }
@@ -32,7 +31,6 @@ public class ConsultationTerminal {
     public void setSva(ScheduledVisitAgenda sva) {
         this.sva = sva;
     }
-    ////////////////////////////////////////////////////////
 
     public void initRevision()throws HealthCardException,  NotValidePrescriptionException, ConnectException {
         this.isFinishedPrescription = false;

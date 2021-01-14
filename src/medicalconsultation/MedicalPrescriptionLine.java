@@ -61,7 +61,6 @@ public class MedicalPrescriptionLine {
         if (!(o instanceof MedicalPrescriptionLine)) return false;
         MedicalPrescriptionLine line = (MedicalPrescriptionLine) o;
         return this.items().equals(line.items());
-
     }
 
     @Override

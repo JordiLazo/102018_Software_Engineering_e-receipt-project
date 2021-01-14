@@ -15,21 +15,21 @@ class DigitalSignatureTest {
         d4 = new DigitalSignature("HOLA");
     }
 
-    @Test
     @DisplayName("Check if two Digital Signatures instances are the same")
+    @Test
     void checkBytesDigitalSignature(){
         assertArrayEquals(d1.getDigitalSignature(),d2.getDigitalSignature());
     }
 
-    @Test
     @DisplayName("Check if a Digital Signature is null or empty")
+    @Test
     void checkDigitalSignature() {
         assertThrows(eSignatureException.class,()-> new DigitalSignature(null));
         assertThrows(eSignatureException.class,()-> new DigitalSignature(""));
     }
 
-    @Test
     @DisplayName("Check if an array byte equals to a Digital Signature")
+    @Test
     void geteSignature(){
         byte[] expected1= "Dr.Ferran".getBytes();
         byte[] expected2= "Dr.Ferran".getBytes();

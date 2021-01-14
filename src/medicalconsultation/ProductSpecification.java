@@ -47,7 +47,6 @@ public class ProductSpecification {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
     public ProductID getProduct() {
         return product;
     }

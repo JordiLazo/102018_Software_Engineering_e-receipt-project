@@ -20,10 +20,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConsultationTerminalTest {
-
     ConsultationTerminal ct1;
     static ScheduledVisitAgenda sva1;
     static HealthNationalService hns1;
+
     @BeforeAll
     static void general_setup() throws HealthCardException, eSignatureException, ProductNotInPrescription, IncorrectTakingGuidelinesException, ParseException {
         hns1 = new HNS();
@@ -37,47 +37,40 @@ class ConsultationTerminalTest {
         ct1.setSva(sva1);
     }
 
-    @Test
     @DisplayName("Check if initRevision is correct")
+    @Test
     void checkinitRevision(){
         assertDoesNotThrow(()->ct1.initRevision());
         assertFalse(ct1.isFinishedPrescription);
         assertNotNull(ct1.medicalPrescription);
 
     }
+
+    @DisplayName("Check if the method searchForProducts has no keyword")
     @Test
-    void initPrescriptionEdition() {
-        // ??
-    }
-
-
-
-    @DisplayName("searchForProducts with no keyword")
-    @Test
-    void searchForProducts() {
+    void checksearchForProducts1() {
         assertThrows(AnyKeyWordMedicineException.class,()->ct1.searchForProducts(""));
     }
-    @DisplayName("searchForProducts with keyword")
+
+    @DisplayName("Check if the method searchForProducts has a keyword")
     @Test
-    void searchForProducts_2() {
+    void checksearchForProducts2() {
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
-
     }
-    @DisplayName("select product option 0")
 
-
+    @DisplayName("Check if selected product option 0")
     @Test
-    void selectProduct_opt0() {
+    void selectProduct1() {
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
         assertNotNull(ct1.choosenProduct);
-
     }
+
     @DisplayName("select product option out index")
     @Test
-    void selectProduct_opt_out_bounds() {
+    void selectProduct2() {
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertThrows(AnyMedicineSearchException.class,()->ct1.selectProduct(31));
@@ -256,17 +249,6 @@ class ConsultationTerminalTest {
             products_byKw.put("refredat",new ArrayList<>(List.of(ps3,ps4,ps5)));
             products_byKw.put("muscular",new ArrayList<>(List.of(ps5,ps6,ps7)));
 
-            /*
-             * Productes del sns
-             * [ maldecap ][ frenadol, migrastick]
-             * [ refredat ][ Efergalan, Efergalan Forte, Ibuprofeno]
-             * [ muscular ][Ibuprofeno,Gelocatil,Paracetamol]
-             *
-             *
-             * getProductsByKW(Refredat) --> [ Efergalan, Frenadol, Ibuprofeno]
-             *
-             * */
-
             return products_byKw;
         }
         private MedicalPrescription generate_Fake_medical_presc() throws ProductNotInPrescription, IncorrectTakingGuidelinesException, eSignatureException, HealthCardException, ParseException {
@@ -307,16 +289,6 @@ class ConsultationTerminalTest {
             }
             throw new AnyKeyWordMedicineException("NOT FOUND");
 
-            /*
-             * Productes del sns
-             * [ maldecap ][ frenadol, migrastick]
-             * [ refredat ][ Efergalan, Frenadol, Ibuprofeno]
-             * [ muscular ][Ibuprofeno,Gelocatil,Paracetamol]
-             *
-             *
-             * getProductsByKW(Refredat) --> [ Efergalan, Frenadol, Ibuprofeno]
-             *
-             * */
         }
 
         @Override

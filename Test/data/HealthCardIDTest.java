@@ -12,14 +12,14 @@ class HealthCardIDTest {
         hc1 = new HealthCardID("BBBBBBBBQR784518965123478958");
     }
 
-    @Test
     @DisplayName("Create a card with the correct format")
+    @Test
     void getPersonalIDTest(){
         assertEquals("BBBBBBBBQR784518965123478958",hc1.getPersonalID());
     }
 
-    @Test
     @DisplayName("Create a card with the wrong format")
+    @Test
     void checkPersonalID(){
         assertThrows(HealthCardException.class,()->new HealthCardID("ABBBBBBBQR784518965123478958"));
         assertThrows(HealthCardException.class,()->new HealthCardID("BBBBBBBBQ2784518965123478958"));
@@ -30,8 +30,8 @@ class HealthCardIDTest {
         assertThrows(HealthCardException.class,()->new HealthCardID(" "));
     }
 
-    @Test
     @DisplayName("Create a card with null format")
+    @Test
     void checkNullPersonalID(){
         assertThrows(HealthCardException.class,()->new HealthCardID(null));
     }

@@ -5,11 +5,8 @@ import data.HealthCardID;
 import data.ProductID;
 import exceptions.IncorrectTakingGuidelinesException;
 import exceptions.ProductNotInPrescription;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 
 
 /**
@@ -19,14 +16,12 @@ public class MedicalPrescription {// A class that represents medical prescriptio
     private int prescCode;
     private Date prescDate;
     private Date endDate;
-    private HealthCardID hcID; // the healthcard ID of the patient
-    private DigitalSignature eSign; // the eSignature of the doctor
+    private HealthCardID hcID;
+    private DigitalSignature eSign;
 
     private final MedicalPrescriptionLine map;
 
 
-
-    // ???// Its components, that is, the set of medical prescription lines
     public MedicalPrescription() {
         this.map = new MedicalPrescriptionLine();
     }
