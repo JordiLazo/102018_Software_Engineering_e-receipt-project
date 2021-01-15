@@ -59,37 +59,38 @@ class ConsultationTerminalTest {
         assertNotNull(ct1.list_of_products);
     }
 
-    @DisplayName("Check if selected product option 0")
+    @DisplayName("Check if the selected product is correct")
     @Test
-    void selectProduct1() {
+    void selectProductCorrect() {
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
         assertNotNull(ct1.choosenProduct);
     }
 
-    @DisplayName("select product option out index")
+    @DisplayName("Check if the selected product option is IndexOutofbounds")
     @Test
-    void selectProduct2() {
+    void selectProductIndexOutofbounds() {
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertThrows(AnyMedicineSearchException.class,()->ct1.selectProduct(31));
         assertNull(ct1.choosenProduct);
 
     }
-    @DisplayName("select product option but list is null")
+    @DisplayName("Check if the selected product option is not in list")
     @Test
-    void selectProduct_in_no_list() {
+    void selectProductNotInList() {
         assertThrows(AnyMedicineSearchException.class,()->ct1.selectProduct(31));
         assertNull(ct1.choosenProduct);
 
     }
-    @DisplayName("Enter medicine Guidelines but chosen product is null")
 
+    @DisplayName("Enter medicine Guidelines but chosen product is null")
     @Test
     void enterMedicineGuidelines() {
         assertThrows(AnySelectedMedicineException.class,()->ct1.enterMedicineGuidelines(new String[]{"Sampe Guidelines"}));
     }
+
     @DisplayName("Enter medicine Guidelines but Guidelines list are empty")
     @Test
     void enterMedicineGuidelines_2() {
@@ -99,6 +100,7 @@ class ConsultationTerminalTest {
         assertNotNull(ct1.choosenProduct);
         assertThrows(AnySelectedMedicineException.class,()->ct1.enterMedicineGuidelines(new String[]{}));
     }
+
     @DisplayName("Enter medicine Guidelines in correct form")
     @Test
     void enterMedicineGuidelines_3() {
