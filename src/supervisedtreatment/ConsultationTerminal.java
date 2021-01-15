@@ -14,16 +14,15 @@ public class ConsultationTerminal {
     HealthCardID hc;
     ScheduledVisitAgenda sva;
     HealthNationalService hns;
-
     boolean isFinishedPrescription;//by default it is initiated to false
     List<ProductSpecification> list_of_products;
     public ProductSpecification choosenProduct;
     public Date treatmentEndingDate =null;
 
-
     public ConsultationTerminal() {
 
     }
+
     public void setHns(HealthNationalService hns) {
         this.hns = hns;
     }
@@ -34,14 +33,11 @@ public class ConsultationTerminal {
 
     public void initRevision()throws HealthCardException,  NotValidePrescriptionException, ConnectException {
         this.isFinishedPrescription = false;
-
         hc = sva.getHealthCardID();
-
         if (hc == null) {
             throw new HealthCardException("Invalid card");
         }
         medicalPrescription = hns.getePrescription(hc);
-
     }
 
     public void initPrescriptionEdition()throws AnyCurrentPrescriptionException, NotFinishedTreatmentException{
@@ -64,7 +60,7 @@ public class ConsultationTerminal {
             }else {
                 throw new AnyMedicineSearchException("Out of list");
             }
-        }else {throw new AnyMedicineSearchException("you have no list");}
+        }else {throw new AnyMedicineSearchException("You have no list");}
     }
 
     public void enterMedicineGuidelines(String[] instruc)throws
@@ -72,8 +68,8 @@ public class ConsultationTerminal {
         if (choosenProduct != null) {
             if (instruc.length !=0) {
                 medicalPrescription.addLine(this.choosenProduct.getProduct(),instruc);
-            }else { throw new AnySelectedMedicineException(" enter medicine guidelines");}
-        }else{ throw new AnySelectedMedicineException(" cannot guideline for empty");}
+            }else { throw new AnySelectedMedicineException("Enter medicine guidelines");}
+        }else{ throw new AnySelectedMedicineException("Can not select a guideline");}
     }
 
     public void enterTreatmentEndingDate(Date date)throws IncorrectEndingDateException{
@@ -101,7 +97,7 @@ public class ConsultationTerminal {
 
     public void printePresc()throws printingException{
         if (medicalPrescription == null) {
-            throw new printingException("Cannot print");
+            throw new printingException("Can not print");
         }
     }
 }

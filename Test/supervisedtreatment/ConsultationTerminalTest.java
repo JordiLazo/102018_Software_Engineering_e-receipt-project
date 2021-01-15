@@ -2,7 +2,6 @@ package supervisedtreatment;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import data.DigitalSignature;
 import data.HealthCardID;
 import data.ProductID;
@@ -10,7 +9,6 @@ import exceptions.*;
 import medicalconsultation.*;
 import org.junit.jupiter.api.*;
 import services.*;
-
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,15 +83,15 @@ class ConsultationTerminalTest {
 
     }
 
-    @DisplayName("Enter medicine Guidelines but chosen product is null")
+    @DisplayName("Check if the method enterMedicineGuideLines contains a null product")
     @Test
-    void enterMedicineGuidelines() {
+    void enterMedicineGuidelinesNull() {
         assertThrows(AnySelectedMedicineException.class,()->ct1.enterMedicineGuidelines(new String[]{"Sampe Guidelines"}));
     }
 
-    @DisplayName("Enter medicine Guidelines but Guidelines list are empty")
+    @DisplayName("Check if the method enterMedicineGuideLines contains a empty list")
     @Test
-    void enterMedicineGuidelines_2() {
+    void enterMedicineGuidelinesEmpty() {
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
@@ -101,13 +99,12 @@ class ConsultationTerminalTest {
         assertThrows(AnySelectedMedicineException.class,()->ct1.enterMedicineGuidelines(new String[]{}));
     }
 
-    @DisplayName("Enter medicine Guidelines in correct form")
+    @DisplayName("Check if the method enterMedicineGuideLines contains a correct format")
     @Test
-    void enterMedicineGuidelines_3() {
+    void enterMedicineGuidelinesCorrect() {
         assertDoesNotThrow(()->ct1.initRevision());
         assertFalse(ct1.isFinishedPrescription);
         assertNotNull(ct1.medicalPrescription);
-
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
@@ -117,31 +114,26 @@ class ConsultationTerminalTest {
 
 
 
-    @DisplayName("enterTreatmentEndingDate but is before start treatment")
+    @DisplayName("Check if the method enterTreatmentEndingDate contains a ending date before the start treatment")
     @Test
-    void enterTreatmentEndingDate() {
+    void enterTreatmentEndingDateEndingDate() {
         assertDoesNotThrow(()->ct1.initRevision());
         assertFalse(ct1.isFinishedPrescription);
         assertNotNull(ct1.medicalPrescription);
-
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
         assertNotNull(ct1.choosenProduct);
         assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
-
         assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/1999")));
-
-
     }
 
-    @DisplayName("enterTreatmentEndingDate but its equal at  start treatment")
+    @DisplayName("Check if the method enterTreatmentEndingDate contains a date that is equal to the start treatment")
     @Test
-    void enterTreatmentEndingDate_1() {
+    void enterTreatmentEndingDateEqualDate() {
         assertDoesNotThrow(()->ct1.initRevision());
         assertFalse(ct1.isFinishedPrescription);
         assertNotNull(ct1.medicalPrescription);
-
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
@@ -150,13 +142,12 @@ class ConsultationTerminalTest {
         assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2000")));
     }
 
-    @DisplayName("enterTreatmentEndingDate but its incorrect format")
+    @DisplayName("Check if the method enterTreatmentEndingDate contains a incorrect format")
     @Test
-    void enterTreatmentEndingDate_2() {
+    void enterTreatmentEndingDateIncorrectFormat() {
         assertDoesNotThrow(()->ct1.initRevision());
         assertFalse(ct1.isFinishedPrescription);
         assertNotNull(ct1.medicalPrescription);
-
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
@@ -165,13 +156,12 @@ class ConsultationTerminalTest {
         assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(null));
     }
 
-    @DisplayName("enterTreatmentEndingDate in correct format")
+    @DisplayName("Check if the method enterTreatmentEndingDate contains a correct format")
     @Test
-    void enterTreatmentEndingDate_3() {
+    void enterTreatmentEndingDateCorrectFormat() {
         assertDoesNotThrow(()->ct1.initRevision());
         assertFalse(ct1.isFinishedPrescription);
         assertNotNull(ct1.medicalPrescription);
-
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
@@ -179,37 +169,31 @@ class ConsultationTerminalTest {
         assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
         assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2021")));
     }
-    @DisplayName("Sending e-prescription but it's not completed")
 
-
-
+    @DisplayName("Check if the method sendePrescription it's not completed")
     @Test
-    void sendePrescription() {
+    void sendePrescriptionNotCompleted() {
         assertThrows(NotCompletedMedicalPrescription.class,()->ct1.sendePrescription());
         assertNull(ct1.medicalPrescription);
     }
-    @DisplayName("Sending e-prescription ")
+    @DisplayName("Check if the method sendePrescription is completed")
     @Test
-    void sendePrescription_1() {
+    void sendePrescriptionCompleted() {
         assertDoesNotThrow(()->ct1.initRevision());
         assertFalse(ct1.isFinishedPrescription);
         assertNotNull(ct1.medicalPrescription);
-
         assertDoesNotThrow(()->ct1.searchForProducts("muscular"));
         assertNotNull(ct1.list_of_products);
         assertDoesNotThrow(()->ct1.selectProduct(0));
         assertNotNull(ct1.choosenProduct);
         assertDoesNotThrow(()->ct1.enterMedicineGuidelines(new String[]{"Guideline1","guideline2"}));
         assertThrows(IncorrectEndingDateException.class,()->ct1.enterTreatmentEndingDate(new SimpleDateFormat("dd/MM/yyyy").parse("1/1/2021")));
-
         assertDoesNotThrow(()->ct1.sendePrescription());
         assertNotNull(ct1.medicalPrescription);
     }
 
-
     private  static class ScheduledVisitAgendaImpl implements ScheduledVisitAgenda {
         public HealthCardID visit1 = new HealthCardID("BBBBBBBBQR784518965123478958");
-
 
         private ScheduledVisitAgendaImpl() throws HealthCardException {
         }
@@ -228,7 +212,6 @@ class ConsultationTerminalTest {
         private final HashMap<String, ArrayList<ProductSpecification>> productsByKw = generate_Fake_products_indexed_by_KW();
         private ArrayList<ProductSpecification> session_selected;
 
-        // genearar fakes
         private HashMap<String, ArrayList<ProductSpecification>> generate_Fake_products_indexed_by_KW() throws ProductNotInPrescription {
             ProductID pd1 = new ProductID("0001");//frenadol
             ProductID pd2 = new ProductID("0002");;//migrastick
@@ -253,6 +236,7 @@ class ConsultationTerminalTest {
 
             return products_byKw;
         }
+
         private MedicalPrescription generate_Fake_medical_presc() throws ProductNotInPrescription, IncorrectTakingGuidelinesException, eSignatureException, HealthCardException, ParseException {
             MedicalPrescription mp = new MedicalPrescription();
 
@@ -265,12 +249,8 @@ class ConsultationTerminalTest {
             mp.seteSign(new DigitalSignature("Dr. Ferran"));
             mp.setHcID(new HealthCardID("BBBBBBBBQR111111111111111111"));
             mp.setPrescCode(11223344);
-            //System.out.println(mp.toString());
-
             return mp;
         }
-
-
 
         public HNS() throws ProductNotInPrescription, IncorrectTakingGuidelinesException, eSignatureException, HealthCardException, ParseException {
 
